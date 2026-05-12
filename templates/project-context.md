@@ -1,9 +1,17 @@
 ---
+id:
+title:
+template_for: project_context
+type: template
 status: active
-updated: YYYY-MM-DD
+created:
+updated:
+confidentiality: private
+exclude_from_retrieval: true
+tags: []
 ---
 
-# {Project Name} Context
+# {{title}} Context
 
 ## What This Is
 
@@ -11,9 +19,9 @@ One paragraph describing the project, target users, and why it exists.
 
 ## Current State
 
-- Code repo: `{repo-path-or-url}`
-- App/runtime: `{framework-or-stack}`
-- Stage: `{idea | prototype | active | paused | shipped}`
+- Code repo:
+- App/runtime:
+- Stage: idea | prototype | active | paused | shipped
 
 ## Product Context
 

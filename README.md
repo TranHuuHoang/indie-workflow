@@ -78,6 +78,8 @@ decisions/
 templates/
 ```
 
+This is the same core model as MOC-style KBs: inbox, project context, reusable lessons, decisions, and templates. MOC-style KBs may use numbered folders such as `00_Inbox/`, `02_Projects/`, `03_Evergreen/`, and `09_Templates/`.
+
 When `--kb` points to an existing path, setup checks the structure and warns about missing alignment points. It does not modify existing KBs.
 
 Project context belongs in the active KB too. For a new project, create:

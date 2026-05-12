@@ -116,6 +116,8 @@ Updated: $today
 - Store current status in a tracker only if the project needs one.
 - Do not store secrets, credentials, tokens, private keys, or raw sensitive logs."
 
+  write_if_missing "$kb_dir/inbox/.gitkeep" ""
+
   write_if_missing "$kb_dir/projects/README.md" "# Projects
 
 Use this folder for project-level durable context.

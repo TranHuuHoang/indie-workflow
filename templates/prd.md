@@ -1,9 +1,17 @@
 ---
+id:
+title:
+template_for: prd
+type: template
 status: draft
-updated: YYYY-MM-DD
+created:
+updated:
+confidentiality: private
+exclude_from_retrieval: true
+tags: []
 ---
 
-# {Project Name} PRD
+# {{title}} PRD
 
 ## Problem
 
