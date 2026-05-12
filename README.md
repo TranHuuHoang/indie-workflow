@@ -98,16 +98,18 @@ If a project already has its own KB, wiki, or docs path, use that. Do not duplic
 
 ## Efficient Workflow
 
-1. Start with `context` when the task depends on existing project knowledge.
-2. Use `plan` before coding unless the change is tiny and obvious.
-3. For a first-time project, let `plan` define the KB/project docs and `execute` create them after approval.
-4. Use `execute` for the code change. It should follow the plan, not expand scope.
-5. Use `verify` before calling the work done.
-6. Use `capture` only for durable updates after work happens.
+1. Describe the project, goal, constraints, and what already exists.
+2. Use `context` to connect that description with the active KB or project source of truth.
+3. Use `plan` before coding unless the change is tiny and obvious.
+4. For a first-time project, let `plan` define the KB/project docs and `execute` create them after approval.
+5. Use `execute` for the code change. It should follow the plan, not expand scope.
+6. Use `verify` before calling the work done.
+7. Use `capture` only for durable updates after work happens.
 
 Most useful prompts:
 
 ```text
+Here is the project I want to build: ...
 Use context from the active KB, then plan the smallest useful slice.
 Execute this plan exactly. If scope changes, stop and re-plan.
 Verify with the repo commands and acceptance criteria.
