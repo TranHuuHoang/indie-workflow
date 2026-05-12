@@ -29,7 +29,7 @@ Default setup installs the skills into Codex and Claude Code, then looks for an 
 ./setup
 ```
 
-For example, if `~/Engineering-KB` exists, setup uses that automatically. If no home KB is found, setup falls back to repo-local `./kb`.
+Setup prefers `~/Engineering-KB` when it exists. Otherwise it looks for one valid home-folder KB with `KB`, `kb`, `Knowledge`, or `knowledge` in the folder name. If no home KB is found, setup falls back to repo-local `./kb`.
 
 `./kb` is ignored by git so fallback local notes are not committed to this workflow repo.
 
@@ -92,7 +92,11 @@ projects/{project-name}/
 └── lessons.md
 ```
 
-Use `templates/project-context.md` and `templates/prd.md` as the starting point.
+Use these templates as starting points:
+
+- `templates/project-context.md`
+- `templates/prd.md`
+- `templates/project-spec.md`
 
 For existing MOC-style KBs, use the same files under `02_Projects/{project-name}/`.
 
