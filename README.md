@@ -23,28 +23,23 @@ Lightweight AI development workflow for indie devs and small teams.
 
 ## Install
 
-Install into Codex and Claude Code, and initialize or check a local markdown KB:
+Install into Codex and Claude Code, and choose a local markdown KB:
 
 ```bash
 ./setup --kb ~/Engineering-KB
 ```
 
-If the KB path exists, setup checks whether it aligns with the workflow and warns about missing pieces. If it does not exist, setup initializes it.
-
-Install skills only:
+The KB path is saved to `~/.indie-workflow/config`. Future runs can use:
 
 ```bash
 ./setup
 ```
 
-Advanced: install skills for one target only:
+If no KB has been configured yet, `./setup` creates and uses `~/.indie-workflow/kb`.
 
-```bash
-./setup --codex
-./setup --claude
-```
+The setup script always initializes or checks the configured KB. If the KB path exists, setup checks whether it aligns with the workflow and warns about missing pieces. If it does not exist, setup initializes it.
 
-The setup script symlinks each skill into:
+The setup script also symlinks each skill into:
 
 - Codex: `${CODEX_HOME:-~/.codex}/skills`
 - Claude Code: `~/.claude/skills`
@@ -54,6 +49,13 @@ Setup is idempotent:
 - If a skill symlink already points to this repo, it is left alone.
 - If a skill symlink points somewhere stale, it is updated.
 - If a real file or directory exists at the target path, setup refuses to overwrite it.
+
+Advanced: install skills for one target only while still checking the configured KB:
+
+```bash
+./setup --codex
+./setup --claude
+```
 
 When `--kb` points to a new path, setup creates a lightweight source-of-truth structure:
 

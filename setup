@@ -4,6 +4,9 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILLS_SRC="$ROOT_DIR/skills"
 SKILL_NAMES=(context plan execute verify capture)
+CONFIG_DIR="${INDIE_WORKFLOW_HOME:-$HOME/.indie-workflow}"
+CONFIG_FILE="$CONFIG_DIR/config"
+DEFAULT_KB_PATH="$CONFIG_DIR/kb"
 
 write_if_missing() {
   local file="$1"
@@ -173,6 +176,29 @@ YYYY-MM-DD-decision-slug.md
   echo "Start here: $kb_dir/01_Maps/MOC - Knowledge Base.md"
 }
 
+load_configured_kb_path() {
+  if [[ ! -f "$CONFIG_FILE" ]]; then
+    return
+  fi
+
+  # shellcheck disable=SC1090
+  source "$CONFIG_FILE"
+
+  if [[ -n "${KB_PATH:-}" ]]; then
+    printf "%s\n" "$KB_PATH"
+  fi
+}
+
+save_kb_path() {
+  local kb_dir="$1"
+
+  mkdir -p "$CONFIG_DIR"
+  cat > "$CONFIG_FILE" <<EOF
+KB_PATH="$kb_dir"
+EOF
+  echo "Saved KB path: $CONFIG_FILE"
+}
+
 install_target() {
   local label="$1"
   local skills_dir="$2"
@@ -242,11 +268,11 @@ while [[ $# -gt 0 ]]; do
       shift 2
       ;;
     -h|--help)
-      echo "Usage: ./setup [--kb PATH] [--codex] [--claude] [--all]"
+      echo "Usage: ./setup [--kb PATH] [--codex] [--claude]"
       echo ""
       echo "Common:"
-      echo "  ./setup --kb ~/Engineering-KB   Install all skills and initialize/check KB"
-      echo "  ./setup                         Install all skills only"
+      echo "  ./setup --kb ~/Engineering-KB   Install skills and use this KB"
+      echo "  ./setup                         Install skills and use configured/default KB"
       echo ""
       echo "Advanced:"
       echo "  ./setup --codex                 Install Codex skills only"
@@ -255,11 +281,19 @@ while [[ $# -gt 0 ]]; do
       ;;
     *)
       echo "Unknown option: $arg" >&2
-      echo "Usage: ./setup [--kb PATH] [--codex] [--claude] [--all]" >&2
+      echo "Usage: ./setup [--kb PATH] [--codex] [--claude]" >&2
       exit 1
       ;;
   esac
 done
+
+if [[ -z "$kb_path" ]]; then
+  kb_path="$(load_configured_kb_path || true)"
+fi
+
+if [[ -z "$kb_path" ]]; then
+  kb_path="$DEFAULT_KB_PATH"
+fi
 
 if [[ "$tool_filter" == false ]]; then
   install_codex=true
@@ -274,6 +308,5 @@ if [[ "$install_claude" == true ]]; then
   install_target "Claude Code" "$HOME/.claude/skills"
 fi
 
-if [[ -n "$kb_path" ]]; then
-  init_kb "$kb_path"
-fi
+init_kb "$kb_path"
+save_kb_path "$kb_path"
