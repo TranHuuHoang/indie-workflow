@@ -1,11 +1,11 @@
 ---
 name: plan
-description: Right-size planning for indie-workflow. Use when the user asks to scope a feature, break down work, create a plan, write a small spec, decide next steps, turn an idea into implementation tasks, or prepare work before coding without a heavyweight ticketing process.
+description: Collaborative planning for indie-workflow. Use when the user asks to scope a project or feature, shape requirements, compare tradeoffs, break down work, write a small spec, decide next steps, turn an idea into implementation tasks, or prepare work before coding.
 ---
 
 # Plan
 
-Plan only as much as the task risk requires.
+Planning is the main thinking phase of the workflow. Spend enough time with the user to make the work clear before implementation starts.
 
 ## Active KB
 
@@ -18,13 +18,16 @@ Use the active KB for specs, constraints, and durable project context:
 ## Workflow
 
 1. Use `context` first when the task depends on existing project knowledge.
-2. Clarify the problem before solution details when requirements are ambiguous.
-3. Define success criteria and explicit non-goals for medium or larger work.
-4. Identify the smallest useful next task.
-5. List likely files or systems touched.
-6. Name the verification commands or manual checks.
-7. For first-time new projects, define the source-of-truth artifacts that `execute` should create after the plan is approved.
-8. For existing projects, mention doc updates only when the planned work changes durable project context.
+2. Restate the goal, current understanding, assumptions, and open questions.
+3. Keep the user in the loop. Ask for decisions when requirements, tradeoffs, or scope boundaries are unclear.
+4. Define success criteria, non-goals, constraints, and important tradeoffs.
+5. Explore the solution shape before choosing the implementation slice.
+6. Break the chosen direction into phases or milestones when useful.
+7. Define the next executable slice only after the broader plan is clear.
+8. List likely files, systems, data, UI states, edge cases, and risks.
+9. Name the verification commands, smoke checks, or acceptance checks.
+10. For first-time new projects, define the source-of-truth artifacts that `execute` should create after the plan is approved.
+11. For existing projects, mention doc updates only when the planned work changes durable project context.
 
 ## New Project Mode
 
@@ -49,6 +52,8 @@ The plan should specify:
 - the target source-of-truth path
 - which files should be created or updated
 - the initial contents or outline for `context.md` and `prd.md`
+- product goals, users, constraints, and non-goals
+- key tradeoffs and decisions that need user approval
 - the first implementation slice
 - verification for that first slice
 
@@ -58,18 +63,22 @@ After the user approves the plan, `execute` owns creating the initial project so
 
 ## Sizing
 
-- **Tiny**: one clear fix. Use a 2-4 item checklist and proceed.
-- **Small**: one feature slice. Write acceptance criteria and verification.
-- **Medium**: multiple files or uncertain behavior. Write a short spec/checklist.
-- **Large/risky**: auth, billing, data, migrations, public APIs, security, or broad architecture. Require explicit success criteria, risks, rollback/verification, and review.
+- **Tiny**: one clear fix. Confirm the goal, write a 2-4 item checklist, and proceed.
+- **Small**: one feature slice. Clarify behavior, acceptance criteria, edge cases, and verification.
+- **Medium**: multiple files or uncertain behavior. Work with the user on a short spec, tradeoffs, phases, and verification.
+- **Large/risky**: auth, billing, data, migrations, public APIs, security, or broad architecture. Require explicit goals, non-goals, risks, rollout/rollback, verification, and review.
 
 ## Output
 
-Prefer concise checklists over formal tickets unless the project already uses a tracker.
+Prefer clear working plans over formal tickets unless the project already uses a tracker. Do not rush to implementation while major requirements or tradeoffs are still unresolved.
 
 For small tasks:
 
 ```text
+Understanding:
+- ...
+Decisions needed:
+- ...
 Plan:
 1. ...
 2. ...
@@ -77,4 +86,6 @@ Verify:
 - ...
 ```
 
-For larger feature slices inside an existing project, use `templates/project-spec.md` from the active KB if present, or create a compact markdown spec in that project's KB folder.
+For larger feature slices inside an existing project, use `templates/project-spec.md` from the active KB if present, or create a compact markdown spec in that project's source-of-truth folder.
+
+Before handing off to `execute`, the user should have approved the plan or clearly asked to proceed.

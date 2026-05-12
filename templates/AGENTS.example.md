@@ -9,8 +9,8 @@ NotiSage is a small Next.js app that turns noisy product updates into concise us
 Use `indie-workflow`:
 
 - `context` before planning or coding when project knowledge matters.
-- `plan` to right-size the next task.
-- `execute` for one scoped implementation task.
+- `plan` as the main collaborative phase for requirements, tradeoffs, scope, success criteria, and implementation slices.
+- `execute` only after the plan is approved, for one scoped implementation task.
 - `verify` before calling work done.
 - `capture` when a durable lesson, decision, or gotcha should be saved.
 

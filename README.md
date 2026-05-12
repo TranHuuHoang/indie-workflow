@@ -58,7 +58,7 @@ Only do this when the project needs its own commands, conventions, or KB/wiki/do
 ## Skills
 
 - `context` - reads the smallest useful project and KB context before work.
-- `plan` - turns an idea into a right-sized checklist, spec, or first implementation slice.
+- `plan` - works with you to shape requirements, tradeoffs, scope, success criteria, and the next executable slice.
 - `execute` - follows the approved plan and makes one scoped change.
 - `verify` - runs tests, lint, build, smoke checks, and reviews done-ness.
 - `capture` - saves later durable lessons, decisions, and context updates.
@@ -100,9 +100,9 @@ If a project already has its own KB, wiki, or docs path, use that. Do not duplic
 
 1. Describe the project, goal, constraints, and what already exists.
 2. Use `context` to connect that description with the active KB or project source of truth.
-3. Use `plan` before coding unless the change is tiny and obvious.
+3. Spend most of the time in `plan`: clarify requirements, tradeoffs, non-goals, phases, and success criteria with the user.
 4. For a first-time project, let `plan` define the KB/project docs and `execute` create them after approval.
-5. Use `execute` for the code change. It should follow the plan, not expand scope.
+5. Use `execute` only after the plan is approved. It should follow the plan, not expand scope.
 6. Use `verify` before calling the work done.
 7. Use `capture` only for durable updates after work happens.
 
@@ -110,7 +110,8 @@ Most useful prompts:
 
 ```text
 Here is the project I want to build: ...
-Use context from the active KB, then plan the smallest useful slice.
+Use context from the active KB, then plan this properly with me before coding.
+Ask me about unclear requirements, tradeoffs, and scope boundaries.
 Execute this plan exactly. If scope changes, stop and re-plan.
 Verify with the repo commands and acceptance criteria.
 Capture only durable lessons or decisions from this work.
