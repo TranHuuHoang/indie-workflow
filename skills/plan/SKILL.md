@@ -23,12 +23,16 @@ Use the active KB for specs, constraints, and durable project context:
 4. Identify the smallest useful next task.
 5. List likely files or systems touched.
 6. Name the verification commands or manual checks.
-7. For first-time new projects, define the project KB artifacts that `execute` should create after the plan is approved.
+7. For first-time new projects, define the source-of-truth artifacts that `execute` should create after the plan is approved.
 8. For existing projects, mention doc updates only when the planned work changes durable project context.
 
 ## New Project Mode
 
-When the user starts a new project, plan the project folder and initial KB files, but do not write them during planning unless the user explicitly asks.
+When the user starts a new project, plan the project folder and initial source-of-truth files, but do not write them during planning unless the user explicitly asks.
+
+If project instructions already declare a project-specific KB, wiki, docs path, or external source of truth, use that location. Do not also create a duplicate project folder in the global KB.
+
+When no project-specific source of truth exists, use the active KB:
 
 ```text
 projects/{project-name}/
@@ -42,7 +46,7 @@ For MOC-style KBs, use `02_Projects/{project-name}/` with the same files.
 
 The plan should specify:
 
-- the target KB path
+- the target source-of-truth path
 - which files should be created or updated
 - the initial contents or outline for `context.md` and `prd.md`
 - the first implementation slice
@@ -50,7 +54,7 @@ The plan should specify:
 
 Use `templates/project-context.md` and `templates/prd.md` from the active KB when present. Keep the PRD practical: problem, users, success criteria, scope, constraints, and first milestone.
 
-After the user approves the plan, `execute` owns creating the initial project KB files only the first time. For later work, `execute` follows the approved plan, changes code, and updates existing project docs only when needed. `capture` is for later lessons and decisions after work happens.
+After the user approves the plan, `execute` owns creating the initial project source-of-truth files only the first time. For later work, `execute` follows the approved plan, changes code, and updates existing project docs only when needed. `capture` is for later lessons and decisions after work happens.
 
 ## Sizing
 

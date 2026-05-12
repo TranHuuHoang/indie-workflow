@@ -95,7 +95,7 @@ decisions/
 templates/
 ```
 
-Project context belongs in the KB too:
+Project context belongs in the source of truth too. If a project already has its own KB, wiki, or docs path, use that location. Otherwise, use the active KB:
 
 ```text
 projects/{project-name}/

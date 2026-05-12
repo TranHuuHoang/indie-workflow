@@ -23,13 +23,17 @@ Before implementation, resolve durable context from the active KB:
 4. Prefer existing patterns and helpers over new abstractions.
 5. Add or update tests when behavior changes and the project has a test pattern.
 6. Follow the approved plan exactly; if scope changes, pause and re-plan.
-7. If an approved plan starts a new project for the first time, create the initial KB project files before or alongside implementation.
+7. If an approved plan starts a new project for the first time, create the initial source-of-truth project files before or alongside implementation.
 8. For later work on an existing project, implement the planned code changes and update project docs only when the plan or changed context requires it.
 9. Hand off to `verify` before calling the work done.
 
 ## New Project Setup
 
-When an approved plan starts a project for the first time, create the initial files in the active KB:
+When an approved plan starts a project for the first time, create the initial files in the planned source-of-truth location.
+
+If the project has its own declared KB, wiki, docs path, or external source of truth, use that location and do not create a duplicate project folder in the global KB.
+
+If no project-specific source of truth exists, use the active KB:
 
 ```text
 projects/{project-name}/
@@ -41,7 +45,7 @@ projects/{project-name}/
 
 For MOC-style KBs, use `02_Projects/{project-name}/` with the same files.
 
-Use the approved plan and available KB templates for the initial content. If the project folder or files already exist, do not recreate the scaffold. Update only the files and sections named by the approved plan, or sections made stale by the current change.
+Use the approved plan and available templates for the initial content. If the project folder or files already exist, do not recreate the scaffold. Update only the files and sections named by the approved plan, or sections made stale by the current change.
 
 For later tasks in the same project, `execute` should mainly change code. Update `context.md`, `prd.md`, `index.md`, or `lessons.md` only when the approved plan calls for it or the implementation changes durable project context.
 

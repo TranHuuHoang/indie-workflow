@@ -30,7 +30,11 @@ Start here:
 
 Use the source of truth for durable context, specs, decisions, and lessons. Keep code and implementation details in this repo.
 
-For first-time new projects, use `plan` to define the project context files, then `execute` to create the initial approved files:
+For first-time new projects, use `plan` to define the project context files, then `execute` to create the initial approved files.
+
+If this project has its own KB, wiki, docs path, or external source of truth, use that location. Do not also create a duplicate project folder in the global KB.
+
+If no project-specific source of truth exists, use the active KB:
 
 - Simple KB: `{active-kb}/projects/{project-name}/context.md`, `prd.md`, and `lessons.md`
 - MOC-style KB: `{active-kb}/02_Projects/{project-name}/context.md`, `prd.md`, and `lessons.md`
