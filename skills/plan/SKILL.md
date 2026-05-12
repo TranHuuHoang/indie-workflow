@@ -7,6 +7,14 @@ description: Right-size planning for indie-workflow. Use when the user asks to s
 
 Plan only as much as the task risk requires.
 
+## Active KB
+
+Use the active KB for specs, constraints, and durable project context:
+
+1. Read `~/.indie-workflow/config` and use `KB_PATH` when present.
+2. If project instructions declare a project-specific KB/wiki/docs path, prefer that path.
+3. If neither exists, use the repo-local `kb/` created by `./setup`.
+
 ## Workflow
 
 1. Use `context` first when the task depends on existing project knowledge.
@@ -38,7 +46,7 @@ Verify:
 - ...
 ```
 
-For larger tasks, use `templates/project-spec.md` if present or create a compact markdown spec in the source of truth.
+For larger tasks, use `09_Templates/project-spec.md` from the active KB if present, or create a compact markdown spec in the active KB.
 
 ## Reference
 

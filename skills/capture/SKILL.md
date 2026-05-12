@@ -7,6 +7,15 @@ description: Capture durable indie-workflow lessons. Use when the user asks to r
 
 Save durable knowledge back to the source of truth.
 
+## Active KB
+
+Always resolve the active KB before writing durable context:
+
+1. Read `~/.indie-workflow/config` and use `KB_PATH` when present.
+2. If project instructions declare a project-specific KB/wiki/docs path, prefer that path.
+3. If neither exists, use the repo-local `kb/` created by `./setup`.
+4. Write to the active KB, not to the code repo, unless the project explicitly stores docs in-repo.
+
 ## Workflow
 
 1. Identify whether the finding is durable enough to save.

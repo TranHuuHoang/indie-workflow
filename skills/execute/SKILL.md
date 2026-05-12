@@ -7,6 +7,14 @@ description: Implement one scoped indie-workflow task. Use when the user asks to
 
 Implement one scoped task and stop before starting unrelated work.
 
+## Active KB
+
+Before implementation, resolve durable context from the active KB:
+
+1. Read `~/.indie-workflow/config` and use `KB_PATH` when present.
+2. If project instructions declare a project-specific KB/wiki/docs path, prefer that path.
+3. If neither exists, use the repo-local `kb/` created by `./setup`.
+
 ## Workflow
 
 1. Read project instructions and adjacent code before editing.

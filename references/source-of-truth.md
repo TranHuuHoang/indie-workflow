@@ -43,10 +43,16 @@ This shape mirrors the user's Engineering KB style while staying generic enough 
 
 ## Setup
 
-Run:
+Default setup creates or checks a repo-local KB at `./kb`:
+
+```bash
+./setup
+```
+
+Use an external KB instead:
 
 ```bash
 ./setup --kb ~/Engineering-KB
 ```
 
-The setup script creates missing folders and starter map files without overwriting existing notes.
+The active KB path is saved to `~/.indie-workflow/config` so skills can find it. The setup script creates missing folders and starter map files without overwriting existing notes.

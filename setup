@@ -6,7 +6,7 @@ SKILLS_SRC="$ROOT_DIR/skills"
 SKILL_NAMES=(context plan execute verify capture)
 CONFIG_DIR="${INDIE_WORKFLOW_HOME:-$HOME/.indie-workflow}"
 CONFIG_FILE="$CONFIG_DIR/config"
-DEFAULT_KB_PATH="$CONFIG_DIR/kb"
+DEFAULT_KB_PATH="$ROOT_DIR/kb"
 
 write_if_missing() {
   local file="$1"
@@ -176,19 +176,6 @@ YYYY-MM-DD-decision-slug.md
   echo "Start here: $kb_dir/01_Maps/MOC - Knowledge Base.md"
 }
 
-load_configured_kb_path() {
-  if [[ ! -f "$CONFIG_FILE" ]]; then
-    return
-  fi
-
-  # shellcheck disable=SC1090
-  source "$CONFIG_FILE"
-
-  if [[ -n "${KB_PATH:-}" ]]; then
-    printf "%s\n" "$KB_PATH"
-  fi
-}
-
 save_kb_path() {
   local kb_dir="$1"
 
@@ -253,12 +240,6 @@ while [[ $# -gt 0 ]]; do
       tool_filter=true
       shift
       ;;
-    --all)
-      install_codex=true
-      install_claude=true
-      tool_filter=true
-      shift
-      ;;
     --kb)
       if [[ $# -lt 2 ]]; then
         echo "--kb requires a path" >&2
@@ -271,8 +252,8 @@ while [[ $# -gt 0 ]]; do
       echo "Usage: ./setup [--kb PATH] [--codex] [--claude]"
       echo ""
       echo "Common:"
-      echo "  ./setup --kb ~/Engineering-KB   Install skills and use this KB"
-      echo "  ./setup                         Install skills and use configured/default KB"
+      echo "  ./setup                         Install skills and create/use repo-local ./kb"
+      echo "  ./setup --kb ~/Engineering-KB   Install skills and use an external KB"
       echo ""
       echo "Advanced:"
       echo "  ./setup --codex                 Install Codex skills only"
@@ -286,10 +267,6 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
-
-if [[ -z "$kb_path" ]]; then
-  kb_path="$(load_configured_kb_path || true)"
-fi
 
 if [[ -z "$kb_path" ]]; then
   kb_path="$DEFAULT_KB_PATH"

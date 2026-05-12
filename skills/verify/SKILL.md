@@ -7,6 +7,14 @@ description: Deterministic verification for indie-workflow. Use when checking co
 
 Never call implementation done until the relevant checks pass or any skipped checks are clearly explained.
 
+## Active KB
+
+Use the active KB when acceptance criteria, specs, or project constraints are needed:
+
+1. Read `~/.indie-workflow/config` and use `KB_PATH` when present.
+2. If project instructions declare a project-specific KB/wiki/docs path, prefer that path.
+3. If neither exists, use the repo-local `kb/` created by `./setup`.
+
 ## Workflow
 
 1. Read verification commands from `AGENTS.md`, `CLAUDE.md`, package scripts, or repo docs.

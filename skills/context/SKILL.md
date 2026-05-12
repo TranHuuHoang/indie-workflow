@@ -7,10 +7,19 @@ description: Load and update project context for indie-workflow. Use when the us
 
 Find the smallest useful context before planning or implementation.
 
+## Active KB
+
+Resolve the active KB before reading or writing context:
+
+1. Read `~/.indie-workflow/config` and use `KB_PATH` when present.
+2. If project instructions declare `Knowledge base:`, `Context repo:`, `Wiki:`, or `Docs:`, prefer that path for this project.
+3. If neither exists, use the repo-local `kb/` created by `./setup`.
+4. Start from `01_Maps/MOC - Knowledge Base.md` or `01_Maps/MOC - Engineering Knowledge Base.md`.
+
 ## Workflow
 
 1. Read the repo instruction file first: `AGENTS.md`, `CLAUDE.md`, or equivalent.
-2. Locate the source of truth from labels such as `Knowledge base:`, `Context repo:`, `Wiki:`, or `Docs:`.
+2. Locate the source of truth using the Active KB rules above.
 3. Start from the source-of-truth index or map, not from a full-text dump.
 4. Read only the notes needed for the current task.
 5. Cite exact file paths and headings when answering from context.

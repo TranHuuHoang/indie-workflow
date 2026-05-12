@@ -16,11 +16,15 @@ Use `indie-workflow`:
 
 ## Source Of Truth
 
+Active KB config: `~/.indie-workflow/config`
+
+Optional project-specific override:
+
 Knowledge base: `{path-to-wiki-or-kb}`
 
 Start here:
 
-- `{path-to-wiki-or-kb}/01_Maps/MOC - Knowledge Base.md`
+- `{active-kb}/01_Maps/MOC - Knowledge Base.md`
 
 Use the source of truth for durable context, specs, decisions, and lessons. Keep code and implementation details in this repo.
 
