@@ -1,73 +1,90 @@
 # indie-workflow
 
-Lightweight AI development workflow for indie devs and small teams.
+A lightweight AI coding workflow for indie devs and small teams.
 
-`indie-workflow` keeps the useful parts of structured AI engineering workflows without importing a heavyweight agent operating system. It is designed for side projects, solo builders, and small teams who want a repeatable loop for context, planning, implementation, verification, and lesson capture.
+`indie-workflow` gives you a simple loop for building side projects with AI:
 
-## Skills
+```text
+context -> plan -> execute -> verify -> capture
+```
 
-- `context` - load the smallest relevant project/wiki context.
-- `plan` - turn a goal into a right-sized checklist or spec.
-- `execute` - implement one scoped task.
-- `verify` - run checks and review whether work is done.
-- `capture` - save durable lessons and decisions back to the source of truth.
+It is intentionally small. No agent operating system, no heavy ticketing ritual, no organization-grade process. Just enough structure to keep your AI assistant grounded in your project and your knowledge base.
 
-## Principles
+## Project Idea
 
-- Keep the core workflow tool-agnostic.
-- Use a wiki, markdown vault, repo docs, or personal KB as the source of truth.
-- Use `AGENTS.md`, `CLAUDE.md`, or equivalent as the tool adapter.
-- Plan only as much as task risk requires.
-- Verify with deterministic checks before calling work done.
-- Capture durable lessons, not every task update.
+Most AI coding sessions fail for boring reasons:
 
-## Install
+- the assistant does not know the project context
+- plans are either too vague or too heavy
+- implementation drifts from the actual goal
+- verification is skipped
+- useful lessons disappear after the chat ends
 
-Default setup installs the skills into Codex and Claude Code, then looks for an existing KB directly under your home directory:
+`indie-workflow` solves that with five installable skills:
+
+- `context` - read the smallest useful project and KB context
+- `plan` - turn a goal into a right-sized checklist or spec
+- `execute` - implement one scoped task
+- `verify` - run checks and review whether the work is done
+- `capture` - save durable lessons and decisions back to the KB
+
+The workflow is tool-friendly, not tool-specific. It installs into Codex and Claude Code, while your KB stays the source of truth.
+
+## Setup
+
+Run setup from this repo:
 
 ```bash
 ./setup
 ```
 
-Setup prefers `~/Engineering-KB` when it exists. Otherwise it looks for one valid home-folder KB with `KB`, `kb`, `Knowledge`, or `knowledge` in the folder name. If no home KB is found, setup falls back to repo-local `./kb`.
+By default, setup:
 
-`./kb` is ignored by git so fallback local notes are not committed to this workflow repo.
+- installs all skills into Codex and Claude Code
+- looks for a KB under your home folder, preferring `~/Engineering-KB`
+- saves the active KB path to `~/.indie-workflow/config`
+- checks the KB structure and warns if important pieces are missing
+- creates repo-local `./kb` only when no home or configured KB is found
 
-Use an existing external KB instead:
+Use a specific KB:
 
 ```bash
 ./setup --kb ~/Engineering-KB
 ```
 
-The active KB path is saved to `~/.indie-workflow/config` so the skills can find it:
-
-```bash
-KB_PATH="/path/to/active/kb"
-```
-
-The setup script always initializes or checks the active KB. If the KB path exists, setup checks whether it aligns with the workflow and warns about missing pieces. If no KB is found, setup initializes repo-local `./kb`.
-
-The setup script also symlinks each skill into:
-
-- Codex: `${CODEX_HOME:-~/.codex}/skills`
-- Claude Code: `~/.claude/skills`
-
-Setup is idempotent:
-
-- If a skill symlink already points to this repo, it is left alone.
-- If a skill symlink points somewhere stale, it is updated.
-- If a real file or directory exists at the target path, setup refuses to overwrite it.
-
-Advanced: install skills for one target only while still checking the active KB:
+Install for only one tool:
 
 ```bash
 ./setup --codex
 ./setup --claude
 ```
 
-Tool flags only narrow skill installation. Use `--kb PATH` in the same command when you want an external KB.
+Tool flags only narrow skill installation. Setup always checks or initializes the active KB because the workflow depends on it.
 
-When `--kb` points to a new path, setup creates a lightweight source-of-truth structure:
+## What This Gives You
+
+A repeatable way to work with AI without turning your side project into enterprise process:
+
+1. Start a project with context in your KB.
+2. Ask AI to read the context before planning.
+3. Plan only enough for the risk of the task.
+4. Execute one scoped change.
+5. Verify with real commands and acceptance criteria.
+6. Capture only durable lessons, decisions, and project context.
+
+Example:
+
+```text
+context: read project context, PRD, existing decisions
+plan: define the next small feature and success criteria
+execute: make the focused code change
+verify: run tests, lint, build, or a smoke check
+capture: save the lesson or decision that should survive this chat
+```
+
+## KB Structure
+
+For a new lightweight KB, setup creates:
 
 ```text
 index.md
@@ -78,11 +95,7 @@ decisions/
 templates/
 ```
 
-This is the same core model as MOC-style KBs: inbox, project context, reusable lessons, decisions, and templates. MOC-style KBs may use numbered folders such as `00_Inbox/`, `02_Projects/`, `03_Evergreen/`, and `09_Templates/`.
-
-When `--kb` points to an existing path, setup checks the structure and warns about missing alignment points. It does not modify existing KBs.
-
-Project context belongs in the active KB too. For a new project, create:
+Project context belongs in the KB too:
 
 ```text
 projects/{project-name}/
@@ -92,25 +105,25 @@ projects/{project-name}/
 └── lessons.md
 ```
 
-Use these templates as starting points:
+For MOC-style KBs, use the same project files under:
+
+```text
+02_Projects/{project-name}/
+```
+
+Use the included templates:
 
 - `templates/project-context.md`
 - `templates/prd.md`
 - `templates/project-spec.md`
-
-For existing MOC-style KBs, use the same files under `02_Projects/{project-name}/`.
+- `templates/AGENTS.md`
+- `templates/CLAUDE.md`
 
 ## Use In A Project
 
 1. Copy `templates/AGENTS.md` for Codex or `templates/CLAUDE.md` for Claude Code into the project root.
-2. Fill in the project commands. Keep the active KB config, or add a project-specific KB override only when needed.
-3. Ask the agent to use `context`, `plan`, `execute`, `verify`, or `capture` as needed.
+2. Fill in the project commands.
+3. Keep the active KB config, or add a project-specific KB override when needed.
+4. Ask your assistant to use `context`, `plan`, `execute`, `verify`, and `capture`.
 
 See `templates/AGENTS.example.md` for a filled Codex example.
-
-## Not Goals
-
-- Not a replacement for tests, linting, or typechecking.
-- Not a mandatory ticketing system.
-- Not a multi-agent framework.
-- Not tied to one AI coding tool.
