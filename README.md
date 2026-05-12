@@ -23,13 +23,15 @@ Lightweight AI development workflow for indie devs and small teams.
 
 ## Install
 
-Default setup installs the skills into Codex and Claude Code, then creates or checks a repo-local KB at `./kb`:
+Default setup installs the skills into Codex and Claude Code, then looks for an existing KB directly under your home directory:
 
 ```bash
 ./setup
 ```
 
-`./kb` is ignored by git so your local notes are not committed to this workflow repo.
+For example, if `~/Engineering-KB` exists, setup uses that automatically. If no home KB is found, setup falls back to repo-local `./kb`.
+
+`./kb` is ignored by git so fallback local notes are not committed to this workflow repo.
 
 Use an existing external KB instead:
 
@@ -43,7 +45,7 @@ The active KB path is saved to `~/.indie-workflow/config` so the skills can find
 KB_PATH="/path/to/active/kb"
 ```
 
-The setup script always initializes or checks the active KB. If the KB path exists, setup checks whether it aligns with the workflow and warns about missing pieces. If it does not exist, setup initializes it.
+The setup script always initializes or checks the active KB. If the KB path exists, setup checks whether it aligns with the workflow and warns about missing pieces. If no KB is found, setup initializes repo-local `./kb`.
 
 The setup script also symlinks each skill into:
 

@@ -168,6 +168,73 @@ EOF
   echo "Saved KB path: $CONFIG_FILE"
 }
 
+is_kb_dir() {
+  local dir="$1"
+
+  [[ -d "$dir" ]] || return 1
+
+  [[ -e "$dir/index.md" ]] && return 0
+  [[ -e "$dir/01_Maps/MOC - Engineering Knowledge Base.md" ]] && return 0
+  [[ -e "$dir/01_Maps/MOC - Knowledge Base.md" ]] && return 0
+  [[ -d "$dir/inbox" && -d "$dir/projects" && -d "$dir/lessons" ]] && return 0
+  [[ -d "$dir/00_Inbox" && -d "$dir/01_Maps" && -d "$dir/03_Evergreen" ]] && return 0
+
+  return 1
+}
+
+discover_home_kb_path() {
+  local preferred="$HOME/Engineering-KB"
+  local candidates=()
+  local dir
+  local name
+
+  if is_kb_dir "$preferred"; then
+    printf "%s\n" "$preferred"
+    return 0
+  fi
+
+  for dir in "$HOME"/*; do
+    [[ -d "$dir" ]] || continue
+    name="$(basename "$dir")"
+    case "$name" in
+      *KB*|*kb*|*Knowledge*|*knowledge*)
+        if is_kb_dir "$dir"; then
+          candidates+=("$dir")
+        fi
+        ;;
+    esac
+  done
+
+  if [[ "${#candidates[@]}" -eq 1 ]]; then
+    printf "%s\n" "${candidates[0]}"
+    return 0
+  fi
+
+  if [[ "${#candidates[@]}" -gt 1 ]]; then
+    echo "WARN: multiple home KB candidates found; using first sorted path. Pass --kb PATH to choose explicitly." >&2
+    printf "%s\n" "${candidates[@]}" | sort | head -n 1
+    return 0
+  fi
+
+  return 1
+}
+
+load_configured_kb_path() {
+  if [[ ! -f "$CONFIG_FILE" ]]; then
+    return 1
+  fi
+
+  # shellcheck disable=SC1090
+  source "$CONFIG_FILE"
+
+  if [[ -n "${KB_PATH:-}" && -d "$KB_PATH" ]]; then
+    printf "%s\n" "$KB_PATH"
+    return 0
+  fi
+
+  return 1
+}
+
 install_target() {
   local label="$1"
   local skills_dir="$2"
@@ -234,8 +301,8 @@ while [[ $# -gt 0 ]]; do
       echo "Usage: ./setup [--kb PATH] [--codex] [--claude]"
       echo ""
       echo "Common:"
-      echo "  ./setup                         Install skills and create/use repo-local ./kb"
-      echo "  ./setup --kb ~/Engineering-KB   Install skills and use an external KB"
+      echo "  ./setup                         Install skills and auto-use a home KB if found"
+      echo "  ./setup --kb ~/Engineering-KB   Install skills and use this KB"
       echo ""
       echo "Advanced:"
       echo "  ./setup --codex                 Install Codex skills only"
@@ -249,6 +316,14 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+if [[ -z "$kb_path" ]]; then
+  kb_path="$(discover_home_kb_path || true)"
+fi
+
+if [[ -z "$kb_path" ]]; then
+  kb_path="$(load_configured_kb_path || true)"
+fi
 
 if [[ -z "$kb_path" ]]; then
   kb_path="$DEFAULT_KB_PATH"
