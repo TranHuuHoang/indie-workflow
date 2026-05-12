@@ -70,7 +70,7 @@ A repeatable way to work with AI without turning your side project into enterpri
 3. Plan only enough for the risk of the task.
 4. Execute one scoped change.
 5. Verify with real commands and acceptance criteria.
-6. Capture only durable lessons, decisions, and project context.
+6. Capture later durable lessons, decisions, and context updates.
 
 Example:
 
@@ -79,7 +79,7 @@ context: read project context, PRD, existing decisions
 plan: define the next small feature and success criteria
 execute: make the focused code change
 verify: run tests, lint, build, or a smoke check
-capture: save the lesson or decision that should survive this chat
+capture: save the lesson, decision, or context update that should survive this chat
 ```
 
 ## KB Structure

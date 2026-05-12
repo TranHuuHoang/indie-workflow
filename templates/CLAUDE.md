@@ -30,10 +30,12 @@ Start here:
 
 Use the source of truth for durable context, specs, decisions, and lessons. Keep code and implementation details in this repo.
 
-For new projects, create or update:
+For new projects, use `plan` to define the project context files, then `execute` to create the initial approved files:
 
 - Simple KB: `{active-kb}/projects/{project-name}/context.md`, `prd.md`, and `lessons.md`
 - MOC-style KB: `{active-kb}/02_Projects/{project-name}/context.md`, `prd.md`, and `lessons.md`
+
+Use `capture` later for updates, lessons, and decisions after work happens.
 
 ## Package Manager And Commands
 

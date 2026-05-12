@@ -23,11 +23,11 @@ Use the active KB for specs, constraints, and durable project context:
 4. Identify the smallest useful next task.
 5. List likely files or systems touched.
 6. Name the verification commands or manual checks.
-7. Save project context or a PRD in the active KB when the work starts a new project or will span multiple sessions.
+7. For new projects or multi-session work, define the project KB artifacts that `execute` should create after the plan is approved.
 
 ## New Project Mode
 
-When the user starts a new project, create or update a project folder in the active KB before implementation:
+When the user starts a new project, plan the project folder and initial KB files, but do not write them during planning unless the user explicitly asks.
 
 ```text
 projects/{project-name}/
@@ -39,7 +39,17 @@ projects/{project-name}/
 
 For MOC-style KBs, use `02_Projects/{project-name}/` with the same files.
 
+The plan should specify:
+
+- the target KB path
+- which files should be created or updated
+- the initial contents or outline for `context.md` and `prd.md`
+- the first implementation slice
+- verification for that first slice
+
 Use `templates/project-context.md` and `templates/prd.md` from the active KB when present. Keep the PRD practical: problem, users, success criteria, scope, constraints, and first milestone.
+
+After the user approves the plan, `execute` owns creating the initial project KB files. `capture` is for later updates, lessons, and decisions after work happens.
 
 ## Sizing
 

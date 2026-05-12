@@ -1,11 +1,11 @@
 ---
 name: context
-description: Load project context for indie-workflow. Use when the user asks to read, search, use, inspect, or understand a project wiki, KB, Obsidian vault, markdown context repo, AGENTS.md, CLAUDE.md, docs folder, architecture notes, specs, decisions, or lessons before planning or coding. For writing durable notes, use capture.
+description: Load project context for indie-workflow. Use when the user asks to read, search, use, inspect, or understand a project wiki, KB, Obsidian vault, markdown context repo, AGENTS.md, CLAUDE.md, docs folder, architecture notes, specs, decisions, or lessons before planning or coding. For initial approved project docs, use execute; for later durable updates, use capture.
 ---
 
 # Context
 
-Find the smallest useful context before planning or implementation. This is a read/routing skill; durable writes belong to `capture`.
+Find the smallest useful context before planning or implementation. This is a read/routing skill; initial project KB files belong to `execute` after an approved plan, and later durable updates belong to `capture`.
 
 ## Active KB
 
@@ -23,7 +23,7 @@ Resolve the active KB before reading context:
 3. Start from the source-of-truth index or map, not from a full-text dump.
 4. Read only the notes needed for the current task.
 5. Cite exact file paths and headings when answering from context.
-6. If the user asks to save or update durable context, switch to `capture`.
+6. If the user asks to create initial project context from an approved plan, switch to `execute`; if the user asks to save later durable updates, switch to `capture`.
 
 ## What To Load
 

@@ -22,7 +22,26 @@ Before implementation, resolve durable context from the active KB:
 3. Keep changes scoped to the requested outcome.
 4. Prefer existing patterns and helpers over new abstractions.
 5. Add or update tests when behavior changes and the project has a test pattern.
-6. Hand off to `verify` before calling the work done.
+6. If an approved plan starts a new project, create the initial KB project files before or alongside implementation.
+7. Hand off to `verify` before calling the work done.
+
+## New Project Setup
+
+When an approved plan includes new project context, create or update the initial files in the active KB:
+
+```text
+projects/{project-name}/
+├── index.md
+├── context.md
+├── prd.md
+└── lessons.md
+```
+
+For MOC-style KBs, use `02_Projects/{project-name}/` with the same files.
+
+Use the approved plan and available KB templates for the initial content. Preserve existing files if they already exist; update only the missing or clearly stale sections needed to start the project.
+
+Do not hand this initial project setup to `capture`. `capture` is for later updates after implementation, verification, or shipping produces durable lessons, decisions, or changed context.
 
 ## Constraints
 
