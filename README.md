@@ -111,19 +111,21 @@ For MOC-style KBs, use the same project files under:
 02_Projects/{project-name}/
 ```
 
-Use the included templates:
+Use the included KB templates:
 
 - `templates/project-context.md`
 - `templates/prd.md`
 - `templates/project-spec.md`
-- `templates/AGENTS.md`
-- `templates/CLAUDE.md`
 
-## Use In A Project
+## Project Instructions
 
-1. Copy `templates/AGENTS.md` for Codex or `templates/CLAUDE.md` for Claude Code into the project root.
-2. Fill in the project commands.
-3. Keep the active KB config, or add a project-specific KB override when needed.
-4. Ask your assistant to use `context`, `plan`, `execute`, `verify`, and `capture`.
+After setup, the skills are already installed globally and can be used across projects.
+
+Per-project instruction files are optional. Add one only when a project needs its own commands, conventions, or KB override:
+
+- Codex: copy `templates/AGENTS.md` to the project root
+- Claude Code: copy `templates/CLAUDE.md` to the project root
+
+Then fill in the project commands and keep the active KB config unless that project needs a different source of truth.
 
 See `templates/AGENTS.example.md` for a filled Codex example.
