@@ -41,7 +41,3 @@ Request or run review when the change touches:
 - Public APIs or cross-system contracts.
 - Broad refactors.
 - UI changes with meaningful regression risk.
-
-## Reference
-
-Read `../../references/core-workflow.md` when deciding how much process the task deserves.

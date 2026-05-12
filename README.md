@@ -63,24 +63,28 @@ Advanced: install skills for one target only while still checking the active KB:
 ./setup --claude
 ```
 
+Tool flags only narrow skill installation. Use `--kb PATH` in the same command when you want an external KB.
+
 When `--kb` points to a new path, setup creates a lightweight source-of-truth structure:
 
 ```text
-00_Inbox/
-01_Maps/
-02_Projects/
-03_Evergreen/
-04_Decisions/
-09_Templates/
+index.md
+inbox/
+projects/
+lessons/
+decisions/
+templates/
 ```
 
-When `--kb` points to an existing path, setup checks the structure, warns about missing alignment points, and writes only missing templates. It does not overwrite existing notes.
+When `--kb` points to an existing path, setup checks the structure and warns about missing alignment points. It does not modify existing KBs.
 
 ## Use In A Project
 
 1. Copy `templates/AGENTS.md` for Codex or `templates/CLAUDE.md` for Claude Code into the project root.
-2. Fill in the source-of-truth path and project commands.
+2. Fill in the project commands. Keep the active KB config, or add a project-specific KB override only when needed.
 3. Ask the agent to use `context`, `plan`, `execute`, `verify`, or `capture` as needed.
+
+See `templates/AGENTS.example.md` for a filled Codex example.
 
 ## Not Goals
 

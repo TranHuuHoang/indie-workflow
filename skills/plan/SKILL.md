@@ -46,8 +46,4 @@ Verify:
 - ...
 ```
 
-For larger tasks, use `09_Templates/project-spec.md` from the active KB if present, or create a compact markdown spec in the active KB.
-
-## Reference
-
-Read `../../references/core-workflow.md` for the risk model and workflow boundaries.
+For larger tasks, use `templates/project-spec.md` from the active KB if present, or create a compact markdown spec in the active KB.

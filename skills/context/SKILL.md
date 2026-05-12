@@ -14,7 +14,7 @@ Resolve the active KB before reading or writing context:
 1. Read `~/.indie-workflow/config` and use `KB_PATH` when present.
 2. If project instructions declare `Knowledge base:`, `Context repo:`, `Wiki:`, or `Docs:`, prefer that path for this project.
 3. If neither exists, use the repo-local `kb/` created by `./setup`.
-4. Start from `01_Maps/MOC - Knowledge Base.md` or `01_Maps/MOC - Engineering Knowledge Base.md`.
+4. Start from `index.md`. Also support existing KB maps such as `01_Maps/MOC - Knowledge Base.md` or `01_Maps/MOC - Engineering Knowledge Base.md`.
 
 ## Workflow
 
@@ -40,7 +40,3 @@ Resolve the active KB before reading or writing context:
 - Large generated dumps.
 - Short-lived task status.
 - Implementation details that belong in code.
-
-## Reference
-
-Read `../../references/source-of-truth.md` when setting up or changing the wiki/KB shape.

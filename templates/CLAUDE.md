@@ -18,13 +18,15 @@ Use `indie-workflow`:
 
 Active KB config: `~/.indie-workflow/config`
 
-Optional project-specific override:
+Use the `KB_PATH` saved there unless this project needs its own KB.
 
-Knowledge base: `{path-to-wiki-or-kb}`
+Optional project-specific override. Delete this line if unused:
+
+Knowledge base: `{optional-project-specific-kb-path}`
 
 Start here:
 
-- `{active-kb}/01_Maps/MOC - Knowledge Base.md`
+- `{active-kb}/index.md`, or the existing KB map if this project uses a different KB structure.
 
 Use the source of truth for durable context, specs, decisions, and lessons. Keep code and implementation details in this repo.
 

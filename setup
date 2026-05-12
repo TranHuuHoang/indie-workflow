@@ -19,12 +19,40 @@ write_if_missing() {
   printf "%s\n" "$content" > "$file"
 }
 
-warn_missing() {
-  local path="$1"
-  local description="$2"
+check_existing_kb() {
+  local kb_dir="$1"
+  local has_issue=false
 
-  if [[ ! -e "$path" ]]; then
-    echo "WARN: missing $description: $path"
+  echo "Detected existing KB: $kb_dir"
+
+  for required in index.md inbox projects lessons decisions templates; do
+    if [[ ! -e "$kb_dir/$required" ]]; then
+      echo "WARN: missing recommended KB path: $kb_dir/$required"
+      has_issue=true
+    fi
+  done
+
+  if [[ -e "$kb_dir/index.md" ]]; then
+    echo "Start here: $kb_dir/index.md"
+  elif [[ -e "$kb_dir/01_Maps/MOC - Engineering Knowledge Base.md" ]]; then
+    echo "Detected Engineering KB map: $kb_dir/01_Maps/MOC - Engineering Knowledge Base.md"
+    echo "Start here: $kb_dir/01_Maps/MOC - Engineering Knowledge Base.md"
+  elif [[ -e "$kb_dir/01_Maps/MOC - Knowledge Base.md" ]]; then
+    echo "Detected indie-workflow KB map: $kb_dir/01_Maps/MOC - Knowledge Base.md"
+    echo "Start here: $kb_dir/01_Maps/MOC - Knowledge Base.md"
+  else
+    echo "WARN: no root KB index found."
+    echo "      Recommended: $kb_dir/index.md"
+    echo "      Also supported:"
+    echo "      - $kb_dir/01_Maps/MOC - Knowledge Base.md"
+    echo "      - $kb_dir/01_Maps/MOC - Engineering Knowledge Base.md"
+    has_issue=true
+  fi
+
+  if [[ "$has_issue" == true ]]; then
+    echo "Existing KB was not modified. Add missing paths manually if you want full alignment."
+  else
+    echo "Existing KB aligns with indie-workflow."
   fi
 }
 
@@ -34,69 +62,32 @@ init_kb() {
   today="$(date +%F)"
 
   if [[ -d "$kb_dir" ]]; then
-    echo "Detected existing KB: $kb_dir"
-
-    warn_missing "$kb_dir/00_Inbox" "inbox folder for raw captures"
-    warn_missing "$kb_dir/01_Maps" "maps folder for routing"
-    warn_missing "$kb_dir/03_Evergreen" "evergreen folder for reusable lessons"
-    warn_missing "$kb_dir/09_Templates" "templates folder"
-
-    if [[ -e "$kb_dir/01_Maps/MOC - Engineering Knowledge Base.md" ]]; then
-      echo "Detected Engineering KB map: $kb_dir/01_Maps/MOC - Engineering Knowledge Base.md"
-      echo "Start here: $kb_dir/01_Maps/MOC - Engineering Knowledge Base.md"
-    elif [[ -e "$kb_dir/01_Maps/MOC - Knowledge Base.md" ]]; then
-      echo "Detected indie-workflow KB map: $kb_dir/01_Maps/MOC - Knowledge Base.md"
-      echo "Start here: $kb_dir/01_Maps/MOC - Knowledge Base.md"
-    else
-      echo "WARN: no root KB map found."
-      echo "      Expected one of:"
-      echo "      - $kb_dir/01_Maps/MOC - Knowledge Base.md"
-      echo "      - $kb_dir/01_Maps/MOC - Engineering Knowledge Base.md"
-    fi
-
-    mkdir -p \
-      "$kb_dir/00_Inbox" \
-      "$kb_dir/01_Maps" \
-      "$kb_dir/03_Evergreen" \
-      "$kb_dir/09_Templates"
-
-    if [[ ! -e "$kb_dir/09_Templates/project-spec.md" ]]; then
-      cp "$ROOT_DIR/templates/project-spec.md" "$kb_dir/09_Templates/project-spec.md"
-    fi
-
-    echo "Checked existing KB structure and added only missing indie-workflow templates."
+    check_existing_kb "$kb_dir"
     return
   fi
 
   mkdir -p \
-    "$kb_dir/00_Inbox" \
-    "$kb_dir/01_Maps" \
-    "$kb_dir/02_Projects" \
-    "$kb_dir/03_Evergreen" \
-    "$kb_dir/04_Decisions" \
-    "$kb_dir/09_Templates"
+    "$kb_dir/inbox" \
+    "$kb_dir/projects" \
+    "$kb_dir/lessons" \
+    "$kb_dir/decisions" \
+    "$kb_dir/templates"
 
-  write_if_missing "$kb_dir/01_Maps/MOC - Knowledge Base.md" "# MOC - Knowledge Base
+  write_if_missing "$kb_dir/index.md" "# Indie Workflow KB
 
 This is the source of truth for indie-workflow: durable project context, engineering lessons, decisions, and learning notes.
 
 Updated: $today
 
-## Start Here
-
-- [MOC - Projects](MOC%20-%20Projects.md)
-- [MOC - Engineering Principles](MOC%20-%20Engineering%20Principles.md)
-
-## Main Areas
+## Areas
 
 | Area | Path | Use for |
 |---|---|---|
-| Inbox | \`00_Inbox/\` | Raw captures before distillation |
-| Maps | \`01_Maps/\` | Routing tables for humans and agents |
-| Projects | \`02_Projects/\` | Project specs, constraints, and durable context |
-| Evergreen | \`03_Evergreen/\` | Reusable engineering lessons and concepts |
-| Decisions | \`04_Decisions/\` | Architecture and product decisions |
-| Templates | \`09_Templates/\` | Reusable note templates |
+| Inbox | \`inbox/\` | Raw captures before distillation |
+| Projects | \`projects/\` | Project specs, constraints, and durable context |
+| Lessons | \`lessons/\` | Reusable engineering lessons and gotchas |
+| Decisions | \`decisions/\` | Architecture and product decisions |
+| Templates | \`templates/\` | Reusable note templates |
 
 ## Rules
 
@@ -105,60 +96,24 @@ Updated: $today
 - Store current status in a tracker only if the project needs one.
 - Do not store secrets, credentials, tokens, private keys, or raw sensitive logs."
 
-  write_if_missing "$kb_dir/01_Maps/MOC - Projects.md" "# MOC - Projects
-
-Project notes contain durable context only: specs, constraints, domain notes, and lessons that future sessions need.
-
-## Projects
-
-- Add project links here.
-
-## Rules
-
-- Keep active task status out of the KB unless the project has no tracker.
-- Prefer short specs and durable lessons over raw implementation logs."
-
-  write_if_missing "$kb_dir/01_Maps/MOC - Engineering Principles.md" "# MOC - Engineering Principles
-
-Evergreen notes are reusable engineering lessons that should transfer across projects.
-
-## Areas
-
-- Concepts
-- Tradeoffs
-- Failure modes
-- System design
-- Domain modeling
-
-## Extraction Rule
-
-When a project teaches a reusable lesson, save:
-
-- the claim
-- why it matters
-- when to use it
-- failure modes
-- related project/source"
-
-  write_if_missing "$kb_dir/02_Projects/README.md" "# Projects
+  write_if_missing "$kb_dir/projects/README.md" "# Projects
 
 Use this folder for project-level durable context.
 
 Recommended project shape:
 
 \`\`\`text
-02_Projects/{project-name}/
+projects/{project-name}/
 ├── index.md
 ├── specs/
-├── systems/
 └── lessons.md
 \`\`\`"
 
-  write_if_missing "$kb_dir/03_Evergreen/README.md" "# Evergreen
+  write_if_missing "$kb_dir/lessons/README.md" "# Lessons
 
-Use this folder for reusable engineering and domain knowledge extracted from projects."
+Use this folder for reusable engineering and domain lessons extracted from projects."
 
-  write_if_missing "$kb_dir/04_Decisions/README.md" "# Decisions
+  write_if_missing "$kb_dir/decisions/README.md" "# Decisions
 
 Use this folder for durable architecture, product, and process decisions.
 
@@ -168,12 +123,12 @@ Recommended filename:
 YYYY-MM-DD-decision-slug.md
 \`\`\`"
 
-  if [[ ! -e "$kb_dir/09_Templates/project-spec.md" ]]; then
-    cp "$ROOT_DIR/templates/project-spec.md" "$kb_dir/09_Templates/project-spec.md"
+  if [[ ! -e "$kb_dir/templates/project-spec.md" ]]; then
+    cp "$ROOT_DIR/templates/project-spec.md" "$kb_dir/templates/project-spec.md"
   fi
 
   echo "Initialized indie-workflow KB: $kb_dir"
-  echo "Start here: $kb_dir/01_Maps/MOC - Knowledge Base.md"
+  echo "Start here: $kb_dir/index.md"
 }
 
 save_kb_path() {

@@ -40,7 +40,3 @@ Always resolve the active KB before writing durable context:
 - Temporary TODOs.
 - Large generated output.
 - Implementation details already obvious from code.
-
-## Reference
-
-Read `../../references/source-of-truth.md` when deciding where a note belongs.

@@ -2,7 +2,7 @@
 
 ## What This Is
 
-Describe the product or repo in one short paragraph.
+NotiSage is a small Next.js app that turns noisy product updates into concise user-facing notifications.
 
 ## Workflow
 
@@ -18,42 +18,35 @@ Use `indie-workflow`:
 
 Active KB config: `~/.indie-workflow/config`
 
-Use the `KB_PATH` saved there unless this project needs its own KB.
-
-Optional project-specific override. Delete this line if unused:
-
-Knowledge base: `{optional-project-specific-kb-path}`
-
 Start here:
 
-- `{active-kb}/index.md`, or the existing KB map if this project uses a different KB structure.
+- `{active-kb}/index.md`
 
 Use the source of truth for durable context, specs, decisions, and lessons. Keep code and implementation details in this repo.
 
 ## Package Manager And Commands
 
-Package manager: `{npm | pnpm | yarn | uv | cargo | go | etc.}`
+Package manager: `pnpm`
 
-- Dev: `{command}`
-- Test: `{command}`
-- Typecheck: `{command}`
-- Lint: `{command}`
-- Build: `{command}`
+- Dev: `pnpm dev`
+- Test: `pnpm test`
+- Typecheck: `pnpm typecheck`
+- Lint: `pnpm lint`
+- Build: `pnpm build`
 
 ## Before Calling Work Done
 
-Run the relevant checks for the files changed. For larger changes, run the full test/typecheck/lint/build sequence.
+Run focused tests for changed behavior. For UI or shared code changes, also run typecheck and lint.
 
 ## Conventions
 
-- Match existing patterns before introducing new ones.
-- Keep changes scoped to the requested task.
-- Prefer small, reversible changes.
-- Add tests when behavior changes or regression risk is meaningful.
+- Keep components small and colocate feature-specific helpers.
+- Prefer existing app routes and data-fetching patterns.
+- Add tests for parsing, filtering, and notification formatting behavior.
 
 ## Gotchas
 
-- `{non-obvious local setup or architecture detail}`
+- Notification copy should be short enough to fit mobile push previews.
 
 ## What Not To Do
 
