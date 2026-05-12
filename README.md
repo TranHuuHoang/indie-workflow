@@ -1,50 +1,26 @@
 # indie-workflow
 
-A lightweight AI coding workflow for indie devs and small teams.
-
-`indie-workflow` gives you a simple loop for building side projects with AI:
+Lightweight AI coding workflow for indie devs and small teams.
 
 ```text
 context -> plan -> execute -> verify -> capture
 ```
 
-It is intentionally small. No agent operating system, no heavy ticketing ritual, no organization-grade process. Just enough structure to keep your AI assistant grounded in your project and your knowledge base.
-
-## Project Idea
-
-Most AI coding sessions fail for boring reasons:
-
-- the assistant does not know the project context
-- plans are either too vague or too heavy
-- implementation drifts from the actual goal
-- verification is skipped
-- useful lessons disappear after the chat ends
-
-`indie-workflow` solves that with five installable skills:
-
-- `context` - read the smallest useful project and KB context
-- `plan` - turn a goal into a right-sized checklist or spec
-- `execute` - implement one scoped task
-- `verify` - run checks and review whether the work is done
-- `capture` - save durable lessons and decisions back to the KB
-
-The workflow is tool-friendly, not tool-specific. It installs into Codex and Claude Code, while your KB stays the source of truth.
-
 ## Setup
-
-Run setup from this repo:
 
 ```bash
 ./setup
 ```
 
-By default, setup:
+This installs all skills globally for Codex and Claude Code, then finds or creates an active KB.
 
-- installs all skills into Codex and Claude Code
-- looks for a KB under your home folder, preferring `~/Engineering-KB`
-- saves the active KB path to `~/.indie-workflow/config`
-- checks the KB structure and warns if important pieces are missing
-- creates repo-local `./kb` only when no home or configured KB is found
+Default KB behavior:
+
+- prefers `~/Engineering-KB`
+- otherwise finds one home-folder KB with `KB`, `kb`, `Knowledge`, or `knowledge` in the name
+- otherwise reuses an existing `~/.indie-workflow/config` KB path
+- otherwise uses repo-local `./kb`
+- saves the chosen path to `~/.indie-workflow/config`
 
 Use a specific KB:
 
@@ -52,37 +28,44 @@ Use a specific KB:
 ./setup --kb ~/Engineering-KB
 ```
 
-Install for only one tool:
+Install for one tool only:
 
 ```bash
 ./setup --codex
 ./setup --claude
 ```
 
-Tool flags only narrow skill installation. Setup always checks or initializes the active KB because the workflow depends on it.
+## How To Use
 
-## What This Gives You
+After setup, the skills are available across projects.
 
-A repeatable way to work with AI without turning your side project into enterprise process:
-
-1. Start a project with context in your KB.
-2. Ask AI to read the context before planning.
-3. Plan only enough for the risk of the task.
-4. Execute one scoped change.
-5. Verify with real commands and acceptance criteria.
-6. Capture later durable lessons, decisions, and context updates.
-
-Example:
+Ask your AI assistant naturally:
 
 ```text
-context: read project context, PRD, existing decisions
-plan: define the next small feature and success criteria
-execute: make the focused code change
-verify: run tests, lint, build, or a smoke check
-capture: save the lesson, decision, or context update that should survive this chat
+Use context and plan for this feature.
+Execute the approved plan.
+Verify the change.
+Capture the durable lesson in the KB.
 ```
 
-## KB Structure
+Optional project instructions:
+
+- Codex: copy `templates/AGENTS.md` to your project root
+- Claude Code: copy `templates/CLAUDE.md` to your project root
+
+Only do this when the project needs its own commands, conventions, or KB/wiki/docs override.
+
+## Skills
+
+- `context` - reads the smallest useful project and KB context before work.
+- `plan` - turns an idea into a right-sized checklist, spec, or first implementation slice.
+- `execute` - follows the approved plan and makes one scoped change.
+- `verify` - runs tests, lint, build, smoke checks, and reviews done-ness.
+- `capture` - saves later durable lessons, decisions, and context updates.
+
+## How The KB Fits
+
+The KB is the source of truth for durable project context, PRDs, decisions, lessons, and reusable engineering knowledge.
 
 For a new lightweight KB, setup creates:
 
@@ -95,7 +78,7 @@ decisions/
 templates/
 ```
 
-Project context belongs in the source of truth too. If a project already has its own KB, wiki, or docs path, use that location. Otherwise, use the active KB:
+Project context lives in the project source of truth:
 
 ```text
 projects/{project-name}/
@@ -105,27 +88,28 @@ projects/{project-name}/
 └── lessons.md
 ```
 
-For MOC-style KBs, use the same project files under:
+For MOC-style KBs, use:
 
 ```text
 02_Projects/{project-name}/
 ```
 
-Use the included KB templates:
+If a project already has its own KB, wiki, or docs path, use that. Do not duplicate it into the global KB.
 
-- `templates/project-context.md`
-- `templates/prd.md`
-- `templates/project-spec.md`
+## Efficient Workflow
 
-## Project Instructions
+1. Start with `context` when the task depends on existing project knowledge.
+2. Use `plan` before coding unless the change is tiny and obvious.
+3. For a first-time project, let `plan` define the KB/project docs and `execute` create them after approval.
+4. Use `execute` for the code change. It should follow the plan, not expand scope.
+5. Use `verify` before calling the work done.
+6. Use `capture` only for durable updates after work happens.
 
-After setup, the skills are already installed globally and can be used across projects.
+Most useful prompts:
 
-Per-project instruction files are optional. Add one only when a project needs its own commands, conventions, or KB override:
-
-- Codex: copy `templates/AGENTS.md` to the project root
-- Claude Code: copy `templates/CLAUDE.md` to the project root
-
-Then fill in the project commands and keep the active KB config unless that project needs a different source of truth.
-
-See `templates/AGENTS.example.md` for a filled Codex example.
+```text
+Use context from the active KB, then plan the smallest useful slice.
+Execute this plan exactly. If scope changes, stop and re-plan.
+Verify with the repo commands and acceptance criteria.
+Capture only durable lessons or decisions from this work.
+```
