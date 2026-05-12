@@ -23,29 +23,31 @@ Lightweight AI development workflow for indie devs and small teams.
 
 ## Install
 
-Install into both Codex and Claude Code:
+Install into Codex and Claude Code, and initialize or check a local markdown KB:
+
+```bash
+./setup --kb ~/Engineering-KB
+```
+
+If the KB path exists, setup checks whether it aligns with the workflow and warns about missing pieces. If it does not exist, setup initializes it.
+
+Install skills only:
 
 ```bash
 ./setup
 ```
 
-Install one target:
+Install skills for one target only:
 
 ```bash
 ./setup --codex
 ./setup --claude
 ```
 
-Install skills and initialize a local markdown KB:
+You can combine a single tool target with KB setup:
 
 ```bash
-./setup --all --kb ~/Engineering-KB
-```
-
-Initialize only the KB:
-
-```bash
-./setup --kb ~/Engineering-KB
+./setup --codex --kb ~/Engineering-KB
 ```
 
 The setup script symlinks each skill into:
@@ -59,7 +61,7 @@ Setup is idempotent:
 - If a skill symlink points somewhere stale, it is updated.
 - If a real file or directory exists at the target path, setup refuses to overwrite it.
 
-When `--kb` is provided, setup creates a lightweight source-of-truth structure:
+When `--kb` points to a new path, setup creates a lightweight source-of-truth structure:
 
 ```text
 00_Inbox/
@@ -70,9 +72,7 @@ When `--kb` is provided, setup creates a lightweight source-of-truth structure:
 09_Templates/
 ```
 
-It writes only missing files, so it will not overwrite an existing KB note.
-
-If the target already looks like this user's Engineering KB, with `01_Maps/MOC - Engineering Knowledge Base.md`, setup preserves that structure and adds only missing templates under `09_Templates/`.
+When `--kb` points to an existing path, setup checks the structure, warns about missing alignment points, and writes only missing templates. It does not overwrite existing notes.
 
 ## Use In A Project
 

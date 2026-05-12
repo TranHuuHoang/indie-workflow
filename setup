@@ -16,12 +16,41 @@ write_if_missing() {
   printf "%s\n" "$content" > "$file"
 }
 
+warn_missing() {
+  local path="$1"
+  local description="$2"
+
+  if [[ ! -e "$path" ]]; then
+    echo "WARN: missing $description: $path"
+  fi
+}
+
 init_kb() {
   local kb_dir="$1"
   local today
   today="$(date +%F)"
 
-  if [[ -e "$kb_dir/01_Maps/MOC - Engineering Knowledge Base.md" ]]; then
+  if [[ -d "$kb_dir" ]]; then
+    echo "Detected existing KB: $kb_dir"
+
+    warn_missing "$kb_dir/00_Inbox" "inbox folder for raw captures"
+    warn_missing "$kb_dir/01_Maps" "maps folder for routing"
+    warn_missing "$kb_dir/03_Evergreen" "evergreen folder for reusable lessons"
+    warn_missing "$kb_dir/09_Templates" "templates folder"
+
+    if [[ -e "$kb_dir/01_Maps/MOC - Engineering Knowledge Base.md" ]]; then
+      echo "Detected Engineering KB map: $kb_dir/01_Maps/MOC - Engineering Knowledge Base.md"
+      echo "Start here: $kb_dir/01_Maps/MOC - Engineering Knowledge Base.md"
+    elif [[ -e "$kb_dir/01_Maps/MOC - Knowledge Base.md" ]]; then
+      echo "Detected indie-workflow KB map: $kb_dir/01_Maps/MOC - Knowledge Base.md"
+      echo "Start here: $kb_dir/01_Maps/MOC - Knowledge Base.md"
+    else
+      echo "WARN: no root KB map found."
+      echo "      Expected one of:"
+      echo "      - $kb_dir/01_Maps/MOC - Knowledge Base.md"
+      echo "      - $kb_dir/01_Maps/MOC - Engineering Knowledge Base.md"
+    fi
+
     mkdir -p \
       "$kb_dir/00_Inbox" \
       "$kb_dir/01_Maps" \
@@ -32,9 +61,7 @@ init_kb() {
       cp "$ROOT_DIR/templates/project-spec.md" "$kb_dir/09_Templates/project-spec.md"
     fi
 
-    echo "Detected existing Engineering KB: $kb_dir"
-    echo "Preserved existing KB structure and added only missing templates."
-    echo "Start here: $kb_dir/01_Maps/MOC - Engineering Knowledge Base.md"
+    echo "Checked existing KB structure and added only missing indie-workflow templates."
     return
   fi
 
@@ -184,37 +211,54 @@ install_target() {
 
 install_codex=false
 install_claude=false
+tool_filter=false
 kb_path=""
 
-if [[ $# -eq 0 ]]; then
+while [[ $# -gt 0 ]]; do
+  arg="$1"
+  case "$arg" in
+    --codex)
+      install_codex=true
+      tool_filter=true
+      shift
+      ;;
+    --claude)
+      install_claude=true
+      tool_filter=true
+      shift
+      ;;
+    --all)
+      install_codex=true
+      install_claude=true
+      tool_filter=true
+      shift
+      ;;
+    --kb)
+      if [[ $# -lt 2 ]]; then
+        echo "--kb requires a path" >&2
+        exit 1
+      fi
+      kb_path="$2"
+      shift 2
+      ;;
+    -h|--help)
+      echo "Usage: ./setup [--kb PATH] [--codex] [--claude] [--all]"
+      echo ""
+      echo "Default: install all skills into Codex and Claude Code."
+      echo "With --kb PATH: also initialize or check the KB at PATH."
+      exit 0
+      ;;
+    *)
+      echo "Unknown option: $arg" >&2
+      echo "Usage: ./setup [--kb PATH] [--codex] [--claude] [--all]" >&2
+      exit 1
+      ;;
+  esac
+done
+
+if [[ "$tool_filter" == false ]]; then
   install_codex=true
   install_claude=true
-else
-  while [[ $# -gt 0 ]]; do
-    arg="$1"
-    case "$arg" in
-      --codex) install_codex=true; shift ;;
-      --claude) install_claude=true; shift ;;
-      --all) install_codex=true; install_claude=true; shift ;;
-      --kb)
-        if [[ $# -lt 2 ]]; then
-          echo "--kb requires a path" >&2
-          exit 1
-        fi
-        kb_path="$2"
-        shift 2
-        ;;
-      -h|--help)
-        echo "Usage: ./setup [--codex] [--claude] [--all] [--kb PATH]"
-        exit 0
-        ;;
-      *)
-        echo "Unknown option: $arg" >&2
-        echo "Usage: ./setup [--codex] [--claude] [--all] [--kb PATH]" >&2
-        exit 1
-        ;;
-    esac
-  done
 fi
 
 if [[ "$install_codex" == true ]]; then
