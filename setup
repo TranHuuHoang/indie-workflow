@@ -244,8 +244,13 @@ while [[ $# -gt 0 ]]; do
     -h|--help)
       echo "Usage: ./setup [--kb PATH] [--codex] [--claude] [--all]"
       echo ""
-      echo "Default: install all skills into Codex and Claude Code."
-      echo "With --kb PATH: also initialize or check the KB at PATH."
+      echo "Common:"
+      echo "  ./setup --kb ~/Engineering-KB   Install all skills and initialize/check KB"
+      echo "  ./setup                         Install all skills only"
+      echo ""
+      echo "Advanced:"
+      echo "  ./setup --codex                 Install Codex skills only"
+      echo "  ./setup --claude                Install Claude Code skills only"
       exit 0
       ;;
     *)

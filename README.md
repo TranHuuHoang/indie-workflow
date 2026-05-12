@@ -37,17 +37,11 @@ Install skills only:
 ./setup
 ```
 
-Install skills for one target only:
+Advanced: install skills for one target only:
 
 ```bash
 ./setup --codex
 ./setup --claude
-```
-
-You can combine a single tool target with KB setup:
-
-```bash
-./setup --codex --kb ~/Engineering-KB
 ```
 
 The setup script symlinks each skill into:
