@@ -22,12 +22,14 @@ Before implementation, resolve durable context from the active KB:
 3. Keep changes scoped to the requested outcome.
 4. Prefer existing patterns and helpers over new abstractions.
 5. Add or update tests when behavior changes and the project has a test pattern.
-6. If an approved plan starts a new project, create the initial KB project files before or alongside implementation.
-7. Hand off to `verify` before calling the work done.
+6. Follow the approved plan exactly; if scope changes, pause and re-plan.
+7. If an approved plan starts a new project for the first time, create the initial KB project files before or alongside implementation.
+8. For later work on an existing project, implement the planned code changes and update project docs only when the plan or changed context requires it.
+9. Hand off to `verify` before calling the work done.
 
 ## New Project Setup
 
-When an approved plan includes new project context, create or update the initial files in the active KB:
+When an approved plan starts a project for the first time, create the initial files in the active KB:
 
 ```text
 projects/{project-name}/
@@ -39,7 +41,9 @@ projects/{project-name}/
 
 For MOC-style KBs, use `02_Projects/{project-name}/` with the same files.
 
-Use the approved plan and available KB templates for the initial content. Preserve existing files if they already exist; update only the missing or clearly stale sections needed to start the project.
+Use the approved plan and available KB templates for the initial content. If the project folder or files already exist, do not recreate the scaffold. Update only the files and sections named by the approved plan, or sections made stale by the current change.
+
+For later tasks in the same project, `execute` should mainly change code. Update `context.md`, `prd.md`, `index.md`, or `lessons.md` only when the approved plan calls for it or the implementation changes durable project context.
 
 Do not hand this initial project setup to `capture`. `capture` is for later updates after implementation, verification, or shipping produces durable lessons, decisions, or changed context.
 

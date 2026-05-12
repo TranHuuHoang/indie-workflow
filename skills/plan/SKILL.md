@@ -23,7 +23,8 @@ Use the active KB for specs, constraints, and durable project context:
 4. Identify the smallest useful next task.
 5. List likely files or systems touched.
 6. Name the verification commands or manual checks.
-7. For new projects or multi-session work, define the project KB artifacts that `execute` should create after the plan is approved.
+7. For first-time new projects, define the project KB artifacts that `execute` should create after the plan is approved.
+8. For existing projects, mention doc updates only when the planned work changes durable project context.
 
 ## New Project Mode
 
@@ -49,7 +50,7 @@ The plan should specify:
 
 Use `templates/project-context.md` and `templates/prd.md` from the active KB when present. Keep the PRD practical: problem, users, success criteria, scope, constraints, and first milestone.
 
-After the user approves the plan, `execute` owns creating the initial project KB files. `capture` is for later updates, lessons, and decisions after work happens.
+After the user approves the plan, `execute` owns creating the initial project KB files only the first time. For later work, `execute` follows the approved plan, changes code, and updates existing project docs only when needed. `capture` is for later lessons and decisions after work happens.
 
 ## Sizing
 
