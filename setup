@@ -1,0 +1,230 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SKILLS_SRC="$ROOT_DIR/skills"
+SKILL_NAMES=(context plan execute verify capture)
+
+write_if_missing() {
+  local file="$1"
+  local content="$2"
+
+  if [[ -e "$file" ]]; then
+    return
+  fi
+
+  printf "%s\n" "$content" > "$file"
+}
+
+init_kb() {
+  local kb_dir="$1"
+  local today
+  today="$(date +%F)"
+
+  if [[ -e "$kb_dir/01_Maps/MOC - Engineering Knowledge Base.md" ]]; then
+    mkdir -p \
+      "$kb_dir/00_Inbox" \
+      "$kb_dir/01_Maps" \
+      "$kb_dir/03_Evergreen" \
+      "$kb_dir/09_Templates"
+
+    if [[ ! -e "$kb_dir/09_Templates/project-spec.md" ]]; then
+      cp "$ROOT_DIR/templates/project-spec.md" "$kb_dir/09_Templates/project-spec.md"
+    fi
+
+    echo "Detected existing Engineering KB: $kb_dir"
+    echo "Preserved existing KB structure and added only missing templates."
+    echo "Start here: $kb_dir/01_Maps/MOC - Engineering Knowledge Base.md"
+    return
+  fi
+
+  mkdir -p \
+    "$kb_dir/00_Inbox" \
+    "$kb_dir/01_Maps" \
+    "$kb_dir/02_Projects" \
+    "$kb_dir/03_Evergreen" \
+    "$kb_dir/04_Decisions" \
+    "$kb_dir/09_Templates"
+
+  write_if_missing "$kb_dir/01_Maps/MOC - Knowledge Base.md" "# MOC - Knowledge Base
+
+This is the source of truth for indie-workflow: durable project context, engineering lessons, decisions, and learning notes.
+
+Updated: $today
+
+## Start Here
+
+- [MOC - Projects](MOC%20-%20Projects.md)
+- [MOC - Engineering Principles](MOC%20-%20Engineering%20Principles.md)
+
+## Main Areas
+
+| Area | Path | Use for |
+|---|---|---|
+| Inbox | \`00_Inbox/\` | Raw captures before distillation |
+| Maps | \`01_Maps/\` | Routing tables for humans and agents |
+| Projects | \`02_Projects/\` | Project specs, constraints, and durable context |
+| Evergreen | \`03_Evergreen/\` | Reusable engineering lessons and concepts |
+| Decisions | \`04_Decisions/\` | Architecture and product decisions |
+| Templates | \`09_Templates/\` | Reusable note templates |
+
+## Rules
+
+- Store durable knowledge here.
+- Store implementation in the code repo.
+- Store current status in a tracker only if the project needs one.
+- Do not store secrets, credentials, tokens, private keys, or raw sensitive logs."
+
+  write_if_missing "$kb_dir/01_Maps/MOC - Projects.md" "# MOC - Projects
+
+Project notes contain durable context only: specs, constraints, domain notes, and lessons that future sessions need.
+
+## Projects
+
+- Add project links here.
+
+## Rules
+
+- Keep active task status out of the KB unless the project has no tracker.
+- Prefer short specs and durable lessons over raw implementation logs."
+
+  write_if_missing "$kb_dir/01_Maps/MOC - Engineering Principles.md" "# MOC - Engineering Principles
+
+Evergreen notes are reusable engineering lessons that should transfer across projects.
+
+## Areas
+
+- Concepts
+- Tradeoffs
+- Failure modes
+- System design
+- Domain modeling
+
+## Extraction Rule
+
+When a project teaches a reusable lesson, save:
+
+- the claim
+- why it matters
+- when to use it
+- failure modes
+- related project/source"
+
+  write_if_missing "$kb_dir/02_Projects/README.md" "# Projects
+
+Use this folder for project-level durable context.
+
+Recommended project shape:
+
+\`\`\`text
+02_Projects/{project-name}/
+├── index.md
+├── specs/
+├── systems/
+└── lessons.md
+\`\`\`"
+
+  write_if_missing "$kb_dir/03_Evergreen/README.md" "# Evergreen
+
+Use this folder for reusable engineering and domain knowledge extracted from projects."
+
+  write_if_missing "$kb_dir/04_Decisions/README.md" "# Decisions
+
+Use this folder for durable architecture, product, and process decisions.
+
+Recommended filename:
+
+\`\`\`text
+YYYY-MM-DD-decision-slug.md
+\`\`\`"
+
+  if [[ ! -e "$kb_dir/09_Templates/project-spec.md" ]]; then
+    cp "$ROOT_DIR/templates/project-spec.md" "$kb_dir/09_Templates/project-spec.md"
+  fi
+
+  echo "Initialized indie-workflow KB: $kb_dir"
+  echo "Start here: $kb_dir/01_Maps/MOC - Knowledge Base.md"
+}
+
+install_target() {
+  local label="$1"
+  local skills_dir="$2"
+
+  mkdir -p "$skills_dir"
+
+  for skill_name in "${SKILL_NAMES[@]}"; do
+    local src="$SKILLS_SRC/$skill_name"
+    local target="$skills_dir/$skill_name"
+
+    if [[ ! -d "$src" ]]; then
+      echo "Missing skill source: $src" >&2
+      exit 1
+    fi
+
+    if [[ -L "$target" ]]; then
+      current_target="$(readlink "$target")"
+      if [[ "$current_target" == "$src" ]]; then
+        echo "Already installed for $label: $skill_name"
+        continue
+      fi
+      rm "$target"
+      ln -s "$src" "$target"
+      echo "Updated stale symlink for $label: $skill_name"
+    elif [[ -e "$target" ]]; then
+      echo "Refusing to overwrite non-symlink: $target" >&2
+      exit 1
+    else
+      ln -s "$src" "$target"
+      echo "Installed for $label: $skill_name"
+    fi
+  done
+
+  echo "Checked indie-workflow skills for $label: $skills_dir"
+}
+
+install_codex=false
+install_claude=false
+kb_path=""
+
+if [[ $# -eq 0 ]]; then
+  install_codex=true
+  install_claude=true
+else
+  while [[ $# -gt 0 ]]; do
+    arg="$1"
+    case "$arg" in
+      --codex) install_codex=true; shift ;;
+      --claude) install_claude=true; shift ;;
+      --all) install_codex=true; install_claude=true; shift ;;
+      --kb)
+        if [[ $# -lt 2 ]]; then
+          echo "--kb requires a path" >&2
+          exit 1
+        fi
+        kb_path="$2"
+        shift 2
+        ;;
+      -h|--help)
+        echo "Usage: ./setup [--codex] [--claude] [--all] [--kb PATH]"
+        exit 0
+        ;;
+      *)
+        echo "Unknown option: $arg" >&2
+        echo "Usage: ./setup [--codex] [--claude] [--all] [--kb PATH]" >&2
+        exit 1
+        ;;
+    esac
+  done
+fi
+
+if [[ "$install_codex" == true ]]; then
+  install_target "Codex" "${CODEX_HOME:-$HOME/.codex}/skills"
+fi
+
+if [[ "$install_claude" == true ]]; then
+  install_target "Claude Code" "$HOME/.claude/skills"
+fi
+
+if [[ -n "$kb_path" ]]; then
+  init_kb "$kb_path"
+fi
