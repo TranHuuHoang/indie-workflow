@@ -23,7 +23,23 @@ Use the active KB for specs, constraints, and durable project context:
 4. Identify the smallest useful next task.
 5. List likely files or systems touched.
 6. Name the verification commands or manual checks.
-7. Save a short spec only when the work will span multiple sessions or people.
+7. Save project context or a PRD in the active KB when the work starts a new project or will span multiple sessions.
+
+## New Project Mode
+
+When the user starts a new project, create or update a project folder in the active KB before implementation:
+
+```text
+projects/{project-name}/
+├── index.md
+├── context.md
+├── prd.md
+└── lessons.md
+```
+
+For MOC-style KBs, use `02_Projects/{project-name}/` with the same files.
+
+Use `templates/project-context.md` and `templates/prd.md` from the active KB when present. Keep the PRD practical: problem, users, success criteria, scope, constraints, and first milestone.
 
 ## Sizing
 
@@ -46,4 +62,4 @@ Verify:
 - ...
 ```
 
-For larger tasks, use `templates/project-spec.md` from the active KB if present, or create a compact markdown spec in the active KB.
+For larger feature slices inside an existing project, use `templates/project-spec.md` from the active KB if present, or create a compact markdown spec in that project's KB folder.

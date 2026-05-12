@@ -27,6 +27,7 @@ Always resolve the active KB before writing durable context:
 
 ## Capture These
 
+- Project context, PRDs, and specs that future sessions need.
 - Reusable engineering lessons.
 - Architecture decisions and tradeoffs.
 - Setup gotchas.
@@ -40,3 +41,5 @@ Always resolve the active KB before writing durable context:
 - Temporary TODOs.
 - Large generated output.
 - Implementation details already obvious from code.
+
+For simple KBs, project notes belong in `projects/{project-name}`. For MOC-style KBs, project notes belong in `02_Projects/{project-name}`.

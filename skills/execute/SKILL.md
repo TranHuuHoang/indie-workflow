@@ -30,14 +30,4 @@ Before implementation, resolve durable context from the active KB:
 - Do not perform destructive git operations unless explicitly requested.
 - Do not overwrite user changes.
 - Do not introduce new frameworks or process machinery unless the task requires it.
-- Do not use sub-agents for routine edits.
-
-## When To Request Review
-
-Request or run review when the change touches:
-
-- Auth, permissions, billing, payments, or security.
-- Migrations or data integrity.
-- Public APIs or cross-system contracts.
-- Broad refactors.
-- UI changes with meaningful regression risk.
+- Do not use sub-agents for routine edits. Let `verify` decide whether risky work needs a separate review pass.

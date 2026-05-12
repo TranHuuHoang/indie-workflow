@@ -9,7 +9,7 @@ Lightweight AI development workflow for indie devs and small teams.
 - `context` - load the smallest relevant project/wiki context.
 - `plan` - turn a goal into a right-sized checklist or spec.
 - `execute` - implement one scoped task.
-- `verify` - run deterministic checks and acceptance review.
+- `verify` - run checks and review whether work is done.
 - `capture` - save durable lessons and decisions back to the source of truth.
 
 ## Principles
@@ -77,6 +77,20 @@ templates/
 ```
 
 When `--kb` points to an existing path, setup checks the structure and warns about missing alignment points. It does not modify existing KBs.
+
+Project context belongs in the active KB too. For a new project, create:
+
+```text
+projects/{project-name}/
+├── index.md
+├── context.md
+├── prd.md
+└── lessons.md
+```
+
+Use `templates/project-context.md` and `templates/prd.md` as the starting point.
+
+For existing MOC-style KBs, use the same files under `02_Projects/{project-name}/`.
 
 ## Use In A Project
 

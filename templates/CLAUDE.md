@@ -30,6 +30,12 @@ Start here:
 
 Use the source of truth for durable context, specs, decisions, and lessons. Keep code and implementation details in this repo.
 
+For new projects, create or update:
+
+- `{active-kb}/projects/{project-name}/context.md`
+- `{active-kb}/projects/{project-name}/prd.md`
+- `{active-kb}/projects/{project-name}/lessons.md`
+
 ## Package Manager And Commands
 
 Package manager: `{npm | pnpm | yarn | uv | cargo | go | etc.}`

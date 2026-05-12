@@ -24,6 +24,12 @@ Start here:
 
 Use the source of truth for durable context, specs, decisions, and lessons. Keep code and implementation details in this repo.
 
+Project notes:
+
+- `{active-kb}/projects/notisage/context.md`
+- `{active-kb}/projects/notisage/prd.md`
+- `{active-kb}/projects/notisage/lessons.md`
+
 ## Package Manager And Commands
 
 Package manager: `pnpm`

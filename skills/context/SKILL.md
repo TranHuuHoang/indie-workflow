@@ -27,6 +27,9 @@ Resolve the active KB before reading or writing context:
 
 ## What To Load
 
+- Project index, project context, and PRD from the active KB when they exist.
+- For simple KBs, project notes live under `projects/{project-name}`.
+- For MOC-style KBs, project notes live under `02_Projects/{project-name}`.
 - Relevant project specs.
 - Architecture notes.
 - Existing decisions and constraints.

@@ -53,6 +53,12 @@ check_existing_kb() {
         has_issue=true
       fi
     done
+    for template in project-context.md prd.md project-spec.md; do
+      if [[ ! -e "$kb_dir/templates/$template" ]]; then
+        echo "WARN: missing recommended KB template: $kb_dir/templates/$template"
+        has_issue=true
+      fi
+    done
   elif [[ "$style" == "moc" ]]; then
     for required in 00_Inbox 01_Maps 03_Evergreen 09_Templates; do
       if [[ ! -e "$kb_dir/$required" ]]; then
@@ -60,6 +66,7 @@ check_existing_kb() {
         has_issue=true
       fi
     done
+    echo "Project notes for MOC-style KBs should use: $kb_dir/02_Projects/{project-name}"
   fi
 
   if [[ "$has_issue" == true ]]; then
@@ -118,7 +125,8 @@ Recommended project shape:
 \`\`\`text
 projects/{project-name}/
 ├── index.md
-├── specs/
+├── context.md
+├── prd.md
 └── lessons.md
 \`\`\`"
 
@@ -138,6 +146,12 @@ YYYY-MM-DD-decision-slug.md
 
   if [[ ! -e "$kb_dir/templates/project-spec.md" ]]; then
     cp "$ROOT_DIR/templates/project-spec.md" "$kb_dir/templates/project-spec.md"
+  fi
+  if [[ ! -e "$kb_dir/templates/project-context.md" ]]; then
+    cp "$ROOT_DIR/templates/project-context.md" "$kb_dir/templates/project-context.md"
+  fi
+  if [[ ! -e "$kb_dir/templates/prd.md" ]]; then
+    cp "$ROOT_DIR/templates/prd.md" "$kb_dir/templates/prd.md"
   fi
 
   echo "Initialized indie-workflow KB: $kb_dir"

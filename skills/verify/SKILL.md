@@ -1,6 +1,6 @@
 ---
 name: verify
-description: Deterministic verification for indie-workflow. Use when checking completed changes, running tests, typecheck, lint, build, smoke tests, acceptance criteria, UI rendering checks, or reviewing whether a task is actually done.
+description: Verify and review completed work for indie-workflow. Use when checking completed changes, running tests, typecheck, lint, build, smoke tests, acceptance criteria, UI rendering checks, reviewing a diff, or deciding whether a task is actually done.
 ---
 
 # Verify
@@ -22,7 +22,8 @@ Use the active KB when acceptance criteria, specs, or project constraints are ne
 3. Run broader checks when the change has wider blast radius.
 4. Check each acceptance criterion with concrete evidence.
 5. For UI work, inspect the rendered page when practical.
-6. Report checks run, pass/fail status, and residual risk.
+6. Review the changed work for correctness, scope, and risk.
+7. Report checks run, pass/fail status, and residual risk.
 
 ## Common Check Order
 
@@ -34,13 +35,19 @@ Use the active KB when acceptance criteria, specs, or project constraints are ne
 
 Adapt to the project. Do not invent commands if the repo does not support them.
 
-## Review Heuristics
+## Lightweight Review
 
 - Correctness against the requested behavior.
 - Scope control.
 - Tests for changed behavior.
 - Security and data safety where relevant.
 - No debug logs, dead code, or accidental generated churn.
+
+## Risk Guidance
+
+- **Low risk**: self-review changed files against acceptance criteria.
+- **Medium risk**: run broader checks and inspect affected flows manually.
+- **High risk**: recommend a separate review pass or sub-agent for auth, payments, migrations, security, public APIs, or broad refactors.
 
 ## Output
 
@@ -50,4 +57,6 @@ Verification:
 - typecheck: PASS (`...`)
 - lint: not run (reason)
 - acceptance: met / partially met / not met
+- review: PASS / ISSUES FOUND
+- residual risk: ...
 ```
