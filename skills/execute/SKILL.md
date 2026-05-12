@@ -13,7 +13,7 @@ Before implementation, resolve durable context from the active KB:
 
 1. Read `~/.indie-workflow/config` and use `KB_PATH` when present.
 2. If project instructions declare a project-specific KB/wiki/docs path, prefer that path.
-3. If neither exists, use the repo-local `kb/` created by `./setup`.
+3. If no active KB is configured, run `./setup`; setup prefers a home KB such as `~/Engineering-KB` and falls back to repo-local `kb/`.
 
 ## Workflow
 

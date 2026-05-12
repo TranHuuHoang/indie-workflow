@@ -32,9 +32,8 @@ Use the source of truth for durable context, specs, decisions, and lessons. Keep
 
 For new projects, create or update:
 
-- `{active-kb}/projects/{project-name}/context.md`
-- `{active-kb}/projects/{project-name}/prd.md`
-- `{active-kb}/projects/{project-name}/lessons.md`
+- Simple KB: `{active-kb}/projects/{project-name}/context.md`, `prd.md`, and `lessons.md`
+- MOC-style KB: `{active-kb}/02_Projects/{project-name}/context.md`, `prd.md`, and `lessons.md`
 
 ## Package Manager And Commands
 
