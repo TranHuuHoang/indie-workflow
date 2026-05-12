@@ -1,6 +1,6 @@
 ---
 name: capture
-description: Capture durable indie-workflow lessons. Use when the user asks to remember, save, update the KB/wiki, capture findings, write lessons, document decisions, update project context, or preserve reusable knowledge after planning, debugging, verification, or shipping.
+description: Capture durable indie-workflow lessons. Use when the user asks to remember, save, update the KB/wiki, capture findings, write lessons, document decisions, or preserve reusable knowledge after planning, debugging, verification, or shipping.
 ---
 
 # Capture
@@ -19,7 +19,7 @@ Always resolve the active KB before writing durable context:
 ## Workflow
 
 1. Identify whether the finding is durable enough to save.
-2. Choose the right destination: inbox, project note, system note, decision, or evergreen lesson.
+2. Choose the right destination: inbox, project note, decision, or lesson.
 3. Distill the lesson. Do not paste raw transcripts or logs.
 4. Preserve existing useful context when updating notes.
 5. Link back to source files, commits, issues, or project notes when helpful.

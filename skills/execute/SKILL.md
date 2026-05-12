@@ -18,7 +18,7 @@ Before implementation, resolve durable context from the active KB:
 ## Workflow
 
 1. Read project instructions and adjacent code before editing.
-2. Confirm the current task, acceptance criteria, and likely verification.
+2. For ambiguous or risky work, confirm the current task, acceptance criteria, and likely verification. For clear small fixes, proceed.
 3. Keep changes scoped to the requested outcome.
 4. Prefer existing patterns and helpers over new abstractions.
 5. Add or update tests when behavior changes and the project has a test pattern.

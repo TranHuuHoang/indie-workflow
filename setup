@@ -22,22 +22,19 @@ write_if_missing() {
 check_existing_kb() {
   local kb_dir="$1"
   local has_issue=false
+  local style="unknown"
 
   echo "Detected existing KB: $kb_dir"
 
-  for required in index.md inbox projects lessons decisions templates; do
-    if [[ ! -e "$kb_dir/$required" ]]; then
-      echo "WARN: missing recommended KB path: $kb_dir/$required"
-      has_issue=true
-    fi
-  done
-
   if [[ -e "$kb_dir/index.md" ]]; then
+    style="simple"
     echo "Start here: $kb_dir/index.md"
   elif [[ -e "$kb_dir/01_Maps/MOC - Engineering Knowledge Base.md" ]]; then
+    style="moc"
     echo "Detected Engineering KB map: $kb_dir/01_Maps/MOC - Engineering Knowledge Base.md"
     echo "Start here: $kb_dir/01_Maps/MOC - Engineering Knowledge Base.md"
   elif [[ -e "$kb_dir/01_Maps/MOC - Knowledge Base.md" ]]; then
+    style="moc"
     echo "Detected indie-workflow KB map: $kb_dir/01_Maps/MOC - Knowledge Base.md"
     echo "Start here: $kb_dir/01_Maps/MOC - Knowledge Base.md"
   else
@@ -49,10 +46,26 @@ check_existing_kb() {
     has_issue=true
   fi
 
+  if [[ "$style" == "simple" ]]; then
+    for required in index.md inbox projects lessons decisions templates; do
+      if [[ ! -e "$kb_dir/$required" ]]; then
+        echo "WARN: missing recommended KB path: $kb_dir/$required"
+        has_issue=true
+      fi
+    done
+  elif [[ "$style" == "moc" ]]; then
+    for required in 00_Inbox 01_Maps 03_Evergreen 09_Templates; do
+      if [[ ! -e "$kb_dir/$required" ]]; then
+        echo "WARN: missing recommended KB path: $kb_dir/$required"
+        has_issue=true
+      fi
+    done
+  fi
+
   if [[ "$has_issue" == true ]]; then
     echo "Existing KB was not modified. Add missing paths manually if you want full alignment."
   else
-    echo "Existing KB aligns with indie-workflow."
+    echo "Existing KB aligns with indie-workflow ($style style)."
   fi
 }
 
