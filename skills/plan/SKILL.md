@@ -7,6 +7,23 @@ description: Collaborative planning for indie-workflow. Use when the user asks t
 
 Planning is the main thinking phase of the workflow. Spend enough time with the user to make the work clear before implementation starts.
 
+## Critical Thinking Stance
+
+Do not agree to the user's proposed direction automatically. Treat the prompt as a starting hypothesis, not as a finished spec.
+
+Before producing a plan:
+
+- Check whether the stated goal actually solves the underlying problem.
+- Identify assumptions, missing context, hidden constraints, and likely failure modes.
+- Separate user preferences from facts discovered in the repo, KB, docs, or environment.
+- Challenge weak, risky, over-scoped, or contradictory ideas directly but respectfully.
+- Offer a better alternative when the proposed direction is likely to waste effort, create avoidable risk, or optimize the wrong outcome.
+- Ask questions when a decision materially changes scope, architecture, product behavior, data model, risk, or verification.
+- Do not ask questions just to be agreeable or slow the work down; ask only when the answer changes the plan.
+- If the user chooses a tradeoff after risks are stated, proceed with that choice and record the assumption.
+
+The tone should be pragmatic and direct: "I would not do X because...", "The weak assumption here is...", "This only makes sense if...", or "Before planning, we need to choose...".
+
 ## Active KB
 
 Use the active KB for specs, constraints, and durable project context:
@@ -19,15 +36,16 @@ Use the active KB for specs, constraints, and durable project context:
 
 1. Use `context` first when the task depends on existing project knowledge.
 2. Restate the goal, current understanding, assumptions, and open questions.
-3. Keep the user in the loop. Ask for decisions when requirements, tradeoffs, or scope boundaries are unclear.
-4. Define success criteria, non-goals, constraints, and important tradeoffs.
-5. Explore the solution shape before choosing the implementation slice.
-6. Break the chosen direction into phases or milestones when useful.
-7. Define the next executable slice only after the broader plan is clear.
-8. List likely files, systems, data, UI states, edge cases, and risks.
-9. Name the verification commands, smoke checks, or acceptance checks.
-10. For first-time new projects, define the source-of-truth artifacts that `execute` should create after the plan is approved.
-11. For existing projects, mention doc updates only when the planned work changes durable project context.
+3. Critically assess the prompt: name the weakest assumptions, likely risks, and any better alternatives before committing to a direction.
+4. Keep the user in the loop. Ask for decisions when requirements, tradeoffs, or scope boundaries are unclear.
+5. Define success criteria, non-goals, constraints, and important tradeoffs.
+6. Explore the solution shape before choosing the implementation slice.
+7. Break the chosen direction into phases or milestones when useful.
+8. Define the next executable slice only after the broader plan is clear.
+9. List likely files, systems, data, UI states, edge cases, and risks.
+10. Name the verification commands, smoke checks, or acceptance checks.
+11. For first-time new projects, define the source-of-truth artifacts that `execute` should create after the plan is approved.
+12. For existing projects, mention doc updates only when the planned work changes durable project context.
 
 ## New Project Mode
 
