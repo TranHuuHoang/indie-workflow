@@ -23,13 +23,22 @@ Before implementation, resolve durable context from the active KB:
 4. Prefer existing patterns and helpers over new abstractions.
 5. Add or update tests when behavior changes and the project has a test pattern.
 6. Follow the approved plan exactly; if scope changes, pause and re-plan.
-7. If an approved plan starts a new project for the first time, create the initial source-of-truth project files before or alongside implementation.
+7. If an approved plan starts a new project for the first time, establish where durable project context should live before or alongside implementation.
 8. For later work on an existing project, implement the planned code changes and update project docs only when the plan or changed context requires it.
 9. Hand off to `verify` before calling the work done.
 
 ## New Project Setup
 
-When an approved plan starts a project for the first time, create the initial files in the planned source-of-truth location.
+When an approved plan starts a project for the first time, establish the project's source-of-truth location.
+
+If a source-of-truth preference is not already recorded, ask the user once whether durable project docs should live in:
+
+- the active/general KB, or
+- project-local files in the repo.
+
+Remember that choice for the project by recording it in the chosen project context/index, repo docs, or project instructions. Future `execute` turns should reuse that recorded preference instead of asking again.
+
+If the chosen location requires filesystem approval, request it when needed. If the user explicitly skips or postpones project docs, note that decision in the repo-local plan or status context.
 
 If the project has its own declared KB, wiki, docs path, or external source of truth, use that location and do not create a duplicate project folder in the global KB.
 
