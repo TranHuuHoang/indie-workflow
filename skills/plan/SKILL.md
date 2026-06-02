@@ -46,6 +46,7 @@ Use the active KB for specs, constraints, and durable project context:
 10. Name the verification commands, smoke checks, or acceptance checks.
 11. For first-time new projects, define the source-of-truth artifacts that `execute` should create after the plan is approved.
 12. For existing projects, mention doc updates only when the planned work changes durable project context.
+13. For MOC/Obsidian-style KBs, preserve the existing folder structure and add useful hub/related wikilinks when planning durable docs.
 
 ## New Project Mode
 

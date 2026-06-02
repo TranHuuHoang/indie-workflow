@@ -22,9 +22,10 @@ Always resolve the active KB before writing durable context:
 2. Choose the right destination: inbox, project note, decision, or lesson.
 3. Distill the lesson. Do not paste raw transcripts or logs.
 4. Preserve existing useful context when updating notes.
-5. Link back to source files, commits, issues, or project notes when helpful.
-6. Avoid secrets, credentials, tokens, private keys, raw sensitive logs, and customer data.
-7. If this is initial project setup immediately after an approved plan, use `execute` instead.
+5. For MOC/Obsidian-style KBs, add or update useful `[[wikilinks]]`, hub maps, and `## Related` sections so durable notes do not become isolated.
+6. Link back to source files, commits, issues, or project notes when helpful.
+7. Avoid secrets, credentials, tokens, private keys, raw sensitive logs, and customer data.
+8. If this is initial project setup immediately after an approved plan, use `execute` instead.
 
 ## Capture These
 

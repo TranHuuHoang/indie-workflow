@@ -22,8 +22,9 @@ Resolve the active KB before reading context:
 2. Locate the source of truth using the Active KB rules above.
 3. Start from the source-of-truth index or map, not from a full-text dump.
 4. Read only the notes needed for the current task.
-5. Cite exact file paths and headings when answering from context.
-6. If the user asks to create initial project context from an approved plan, switch to `execute`; if the user asks to save later durable updates, switch to `capture`.
+5. For MOC/Obsidian-style KBs, follow map notes and `## Related` wikilinks before broad search when possible.
+6. Cite exact file paths and headings when answering from context.
+7. If the user asks to create initial project context from an approved plan, switch to `execute`; if the user asks to save later durable updates, switch to `capture`.
 
 ## What To Load
 
